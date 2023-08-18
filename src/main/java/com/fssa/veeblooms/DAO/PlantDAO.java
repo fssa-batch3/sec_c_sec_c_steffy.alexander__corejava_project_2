@@ -28,7 +28,8 @@ public class PlantDAO {
 			connection = ConnectionUtil.getConnection();
 
 			// Execute insert statement
-			PreparedStatement pst = connection.prepareStatement(insertQuery);
+		
+			try(PreparedStatement pst = connection.prepareStatement(insertQuery)){
 
 			pst.setString(1, plant.getPlantName());
 			pst.setDouble(2, plant.getPrice());
@@ -43,6 +44,7 @@ public class PlantDAO {
 			Logger.info("row/rows affected: " + row_affected);
 
 			addImageUrl(plant);
+			}
 
 		} catch (SQLException e) {
 			throw new CustomException("Error creating plant", e);
@@ -62,7 +64,7 @@ public class PlantDAO {
 			// Create update statement using task id
 			String query = "SELECT COUNT(*) FROM plant WHERE plantName = ? ";// ?=hibiscus....count=1
 			connection = ConnectionUtil.getConnection();
-			PreparedStatement pst = connection.prepareStatement(query);
+			try(PreparedStatement pst = connection.prepareStatement(query)){
 			pst.setString(1, plantName);
 
 			ResultSet rs = pst.executeQuery();
@@ -78,7 +80,7 @@ public class PlantDAO {
 					return false;
 					// 0 > 0 ===> false
 				}
-
+			}
 			}
 		} catch (SQLException e) {
 			throw new CustomException("Error while checking whether the plant already exists", e);
