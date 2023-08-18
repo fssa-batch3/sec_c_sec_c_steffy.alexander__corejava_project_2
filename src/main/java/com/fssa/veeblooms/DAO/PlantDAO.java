@@ -80,8 +80,7 @@ public class PlantDAO {
 					return false;
 					// 0 > 0 ===> false
 				}
-			}
-			}
+			}			}
 		} catch (SQLException e) {
 			throw new CustomException("Error while checking whether the plant already exists", e);
 
@@ -108,7 +107,7 @@ public class PlantDAO {
 
 			String query = "SELECT plant_id FROM plant WHERE plantName = ? ";
 
-			PreparedStatement pst = connection.prepareStatement(query);
+			try(PreparedStatement pst = connection.prepareStatement(query)){
 
 			pst.setString(1, plantName);
 
@@ -128,7 +127,7 @@ public class PlantDAO {
 			}
 
 			return id;
-
+			}
 		} catch (SQLException e) {
 			throw new CustomException("Error getting id by plant name", e);
 		} finally {
