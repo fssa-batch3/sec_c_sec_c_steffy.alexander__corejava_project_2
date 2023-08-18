@@ -32,8 +32,8 @@ public class TestPlantValidator {
 		images.add("https://learn.facecampus.org/fn/fop-and-dsa-training/#curriculum");
 		images.add("https://app.facecampus.org/calendar/");
 		images.add("https://chat.openai.com/");
-
-		Plant plantWithInvalidName = new Plant(null, images, 25.0, 4, "Flowering", 30, "Spring", HybridEnum.NO);
+   new Plant(null);
+		Plant plantWithInvalidName = new Plant(images, 25.0, 4, "Flowering", 30, "Spring", HybridEnum.NO);
 
 		try {
 			PlantValidator.validatePlant(plantWithInvalidName);
@@ -50,8 +50,8 @@ public class TestPlantValidator {
 		images.add("https://learn.facecampus.org/fn/fop-and-dsa-training/#curriculum");
 		images.add("https://app.facecampus.org/calendar/");
 		images.add("https://chat.openai.com/");
-
-		Plant validPlant = new Plant("rose", images, 25.0, 4, "Flowering", 30, "Spring", HybridEnum.NO);
+		new Plant("rose");
+		Plant validPlant = new Plant(images, 25.0, 4, "Flowering", 30, "Spring", HybridEnum.NO);
 		try {
 			boolean result = PlantValidator.validatePlant(validPlant);
 			Assertions.assertTrue(result);

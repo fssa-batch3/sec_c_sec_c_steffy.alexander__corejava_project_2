@@ -6,7 +6,7 @@ import com.fssa.veeblooms.Enum.HybridEnum;
 
 
 public class Plant {
-	private int plantId;
+	
 	private String plantName;
 	private List<String> plantImagesUrl;
 	private double price;
@@ -80,10 +80,10 @@ public class Plant {
 		this.hybrid = hybrid;
 	}
 
-	public Plant(String plantName, List<String> plantImagesUrl, double price, int rating, String plantType,
+	public Plant(List<String> plantImagesUrl, double price, int rating, String plantType,
 			float plantHeight, String plantingSeason, HybridEnum hybrid) {
 		super();
-		this.plantName = plantName;
+		
 		this.plantImagesUrl = plantImagesUrl;
 		this.price = price;
 		this.rating = rating;
@@ -91,6 +91,9 @@ public class Plant {
 		this.plantHeight = plantHeight;
 		this.plantingSeason = plantingSeason;
 		this.hybrid = hybrid;
+	}
+	public Plant(String plantName) {
+		this.plantName = plantName;
 	}
 
 	public Plant() {
