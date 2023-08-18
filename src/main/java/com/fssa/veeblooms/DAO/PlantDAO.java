@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fssa.logger.Logger;
 import com.fssa.veeblooms.CustomException;
 import com.fssa.veeblooms.Plant;
 import com.fssa.veeblooms.Enum.HybridEnum;
@@ -39,7 +40,7 @@ public class PlantDAO {
 
 			int row_affected = pst.executeUpdate();
 
-			System.out.println("row/rows affected: " + row_affected);
+			Logger.info("row/rows affected: " + row_affected);
 
 			addImageUrl(plant);
 
@@ -109,7 +110,8 @@ public class PlantDAO {
 
 			pst.setString(1, plantName);
 
-			System.out.println(pst);
+		
+			Logger.info(pst);
 
 			ResultSet rs = pst.executeQuery();
 
@@ -214,7 +216,7 @@ public class PlantDAO {
 			callableStatement.setInt(1, plant_ids);
 
 			callableStatement.execute();
-			System.out.println("deleted");
+			Logger.info("deleted");
 			return true;
 		} catch (SQLException e) {
 			throw new CustomException("Error deleting plant", e); 

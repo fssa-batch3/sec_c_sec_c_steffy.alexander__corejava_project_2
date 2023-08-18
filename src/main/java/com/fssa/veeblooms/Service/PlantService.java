@@ -55,11 +55,7 @@ public class PlantService {
 
 	}
 	
-//	public static boolean deletePlant() {
-//		return true;
-//		
-//	}
-	
+
 	
 
 }
