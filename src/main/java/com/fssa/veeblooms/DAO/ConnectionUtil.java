@@ -1,6 +1,7 @@
 package com.fssa.veeblooms.DAO;
 
 import java.sql.Connection;
+import com.fssa.veeblooms.*;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +9,7 @@ import java.sql.Statement;
 
 class ConnectionUtil {
 
-	public static Connection getConnection() {
+	public static Connection getConnection() throws CustomException {
 
 		Connection con = null;
 		String url = "jdbc:mysql://localhost:3306/veeblooms";
@@ -18,7 +19,7 @@ class ConnectionUtil {
 			con = DriverManager.getConnection(url, userName, passWord);
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new RuntimeException("Unable to connect to the database");
+			throw new CustomException("Unable to connect to the database");
 		}
 		return con;
 	}
