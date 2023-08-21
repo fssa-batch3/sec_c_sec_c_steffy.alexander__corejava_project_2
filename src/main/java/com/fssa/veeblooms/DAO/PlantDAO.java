@@ -205,7 +205,7 @@ public class PlantDAO {
 			throw new CustomException("id cannot be zero or negative");
 		}
 		Connection connection = null;
-		java.sql.CallableStatement callableStatement = null;
+//		java.sql.CallableStatement callableStatement = null;
 		try {
 			String query = "{call DeletePlants(?)}";
 
@@ -213,9 +213,9 @@ public class PlantDAO {
 
 			try (CallableStatement cStatement = connection.prepareCall(query)) {
 
-				callableStatement.setInt(1, plant_ids);
+				cStatement.setInt(1, plant_ids);
 
-				callableStatement.execute();
+				cStatement.execute();
 				Logger.info("deleted");
 				return true;
 			}
