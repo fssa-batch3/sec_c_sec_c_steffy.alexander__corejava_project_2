@@ -200,7 +200,7 @@ public class PlantDAO {
 		}
 	}
 
-	public static boolean deletePlantById(int plant_ids) throws CustomException, SQLException {
+	public static boolean deletePlantById(int plant_ids) throws CustomException, SQLException,NullPointerException {
 		if (plant_ids <= 0) {
 			throw new CustomException("id cannot be zero or negative");
 		}
