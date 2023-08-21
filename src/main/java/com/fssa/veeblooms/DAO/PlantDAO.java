@@ -1,5 +1,6 @@
 package com.fssa.veeblooms.DAO;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -210,13 +211,14 @@ public class PlantDAO {
 
 			connection = ConnectionUtil.getConnection();
 
-			callableStatement = connection.prepareCall(query);
+			try (CallableStatement cStatement = connection.prepareCall(query)) {
 
-			callableStatement.setInt(1, plant_ids);
+				callableStatement.setInt(1, plant_ids);
 
-			callableStatement.execute();
-			Logger.info("deleted");
-			return true;
+				callableStatement.execute();
+				Logger.info("deleted");
+				return true;
+			}
 		} catch (SQLException e) {
 			throw new CustomException("Error deleting plant", e);
 		} finally {
