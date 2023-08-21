@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Assertions;
 import com.fssa.veeblooms.CustomException;
 import com.fssa.veeblooms.ErrorMessages;
 import com.fssa.veeblooms.Plant;
-import com.fssa.veeblooms.DAO.PlantDAO;
 import com.fssa.veeblooms.Enum.HybridEnum;
+import com.fssa.veeblooms.dao.PlantDAO;
 
 public class TestPlantService {
 
