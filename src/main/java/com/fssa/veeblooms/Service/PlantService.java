@@ -1,61 +1,68 @@
 package com.fssa.veeblooms.Service;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.fssa.veeblooms.CustomException;
 import com.fssa.veeblooms.Plant;
-import com.fssa.veeblooms.Enum.HybridEnum;
 import com.fssa.veeblooms.dao.PlantDAO;
 import com.fssa.veeblooms.validator.PlantValidator;
 
 public class PlantService {
-	
-	
+
 	private static PlantValidator plantValidator;
 	private static PlantDAO plantDAO;
 
-	public PlantService(PlantValidator plantValidator,PlantDAO plantDAO) {
-		this.plantValidator=plantValidator;
-		this.plantDAO=plantDAO;
+	PlantService(PlantValidator plantValidator, PlantDAO plantDAO) {
+		PlantService.setPlantValidator(plantValidator);
+		PlantService.setPlantDAO(plantDAO);
 	}
-	 
+
 	public static boolean addPlant(Plant plant) throws CustomException, SQLException {
 
-		if (plantValidator.validatePlant(plant)) {
+		if (PlantValidator.validatePlant(plant)) {
 
-				plantDAO.addPlant(plant);
-			
+			PlantDAO.addPlant(plant);
+
 		}
 
 		return true;
 
 	}
-	public static boolean updatePlant(Plant plant,int plantId) throws CustomException, SQLException {
 
-		if (plantValidator.validatePlant(plant)) {
+	public static boolean updatePlant(Plant plant, int plantId) throws CustomException, SQLException {
 
-				plantDAO.updatePlant(plant,plantId);
-			
+		if (PlantValidator.validatePlant(plant)) {
+
+			PlantDAO.updatePlant(plant, plantId);
+
 		}
 
 		return true;
 
 	}
+
 	public static boolean deletePlant(int id) throws CustomException, SQLException {
 
-
-
-				PlantDAO.deletePlantById(8);
-			
-
+		PlantDAO.deletePlantById(8);
 
 		return true;
 
 	}
-	
 
-	
+	public static PlantValidator getPlantValidator() {
+		return plantValidator;
+	}
+
+	public static void setPlantValidator(PlantValidator plantValidator) {
+		PlantService.plantValidator = plantValidator;
+	}
+
+	public static PlantDAO getPlantDAO() {
+		return plantDAO;
+	}
+
+	public static void setPlantDAO(PlantDAO plantDAO) {
+		PlantService.plantDAO = plantDAO;
+	}
 
 }
