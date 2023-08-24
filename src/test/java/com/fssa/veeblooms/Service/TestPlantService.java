@@ -76,7 +76,7 @@ public class TestPlantService {
 
 	@Test
 	public void testDeletePlant() throws CustomException, SQLException, NullPointerException, DAOException {
-		Assertions.assertTrue(PlantDAO.deletePlantById(16));
+		Assertions.assertTrue(PlantDAO.deletePlantById(18));
 	}
 
 	@Test
