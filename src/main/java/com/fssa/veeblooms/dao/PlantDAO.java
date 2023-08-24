@@ -179,25 +179,5 @@ public class PlantDAO {
 			throw new DAOException("Error deleting plant", e);
 		}
 	}
-
-//	public static void main(String[] args) throws CustomException, SQLException {
-//
-//		List<String> images = new ArrayList<>();
-//		images.add("https://www.youtube.com/watch?v=55tCJ8Odjvw");
-//		images.add("https://learn.facecampus.org/fn/fop-and-dsa-training/#curriculum");
-//		images.add("https://app.facecampus.org/calendar/");
-//		images.add("https://chat.openai.com/");
-//
-//		Plant plant = new Plant();
-//		plant.setPlantName("rose plant");
-//		plant.setPlantImagesUrl(images);
-//		plant.setPrice(250);
-//		plant.setRating(5);
-//		plant.setPlantType("Flower");
-//		plant.setPlantHeight(5.2f);
-//		plant.setPlantingSeason("Autumn");
-//		plant.setHybrid(HybridEnum.YES);
-//
-//		updatePlant(plant, 17);
-//	}
 }
+
