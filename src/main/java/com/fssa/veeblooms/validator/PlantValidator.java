@@ -4,9 +4,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.fssa.veeblooms.CustomException;
-import com.fssa.veeblooms.ErrorMessages;
-import com.fssa.veeblooms.Plant;
+import com.fssa.veeblooms.exception.*;
+import com.fssa.veeblooms.model.*;
 import com.fssa.veeblooms.Enum.HybridEnum;
 
 public class PlantValidator {

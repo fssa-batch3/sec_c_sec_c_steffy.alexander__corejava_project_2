@@ -1,10 +1,10 @@
 package com.fssa.veeblooms.Service;
 
 import java.sql.SQLException;
-
-import com.fssa.veeblooms.CustomException;
-import com.fssa.veeblooms.Plant;
 import com.fssa.veeblooms.dao.PlantDAO;
+import com.fssa.veeblooms.exception.CustomException;
+import com.fssa.veeblooms.exception.DAOException;
+import com.fssa.veeblooms.model.Plant;
 import com.fssa.veeblooms.validator.PlantValidator;
 
 public class PlantService {
@@ -17,7 +17,10 @@ public class PlantService {
 		PlantService.setPlantDAO(plantDAO);
 	}
 
-	public static boolean addPlant(Plant plant) throws CustomException, SQLException {
+	public PlantService() {
+	}
+
+	public static boolean addPlant(Plant plant) throws CustomException,DAOException, SQLException {
 
 		if (PlantValidator.validatePlant(plant)) {
 
@@ -29,7 +32,7 @@ public class PlantService {
 
 	}
 
-	public static boolean updatePlant(Plant plant, int plantId) throws CustomException, SQLException {
+	public static boolean updatePlant(Plant plant, int plantId) throws DAOException, SQLException, CustomException {
 
 		if (PlantValidator.validatePlant(plant)) {
 
@@ -41,7 +44,7 @@ public class PlantService {
 
 	}
 
-	public static boolean deletePlant(int id) throws CustomException, SQLException {
+	public static boolean deletePlant(int i) throws DAOException, SQLException {
 
 		PlantDAO.deletePlantById(8);
 

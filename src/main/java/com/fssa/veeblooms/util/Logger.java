@@ -1,4 +1,4 @@
-package com.fssa.logger;
+package com.fssa.veeblooms.util;
 
 public class Logger {
 	public static void info(Object obj) {

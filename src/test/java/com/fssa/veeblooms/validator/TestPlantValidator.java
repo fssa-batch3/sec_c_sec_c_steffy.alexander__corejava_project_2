@@ -6,10 +6,11 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
-import com.fssa.veeblooms.CustomException;
-import com.fssa.veeblooms.ErrorMessages;
-import com.fssa.veeblooms.Plant;
 import com.fssa.veeblooms.Enum.HybridEnum;
+import com.fssa.veeblooms.exception.CustomException;
+import com.fssa.veeblooms.model.ErrorMessages;
+import com.fssa.veeblooms.model.Plant;
+
 
 public class TestPlantValidator {
 
@@ -26,14 +27,14 @@ public class TestPlantValidator {
 	}
 
 	@Test
-	public void testValidatePlant_InvalidPlantName() {
-		List<String> images = new ArrayList<String>();
-		images.add("https://www.youtube.com/watch?v=55tCJ8Odjvw");
-		images.add("https://learn.facecampus.org/fn/fop-and-dsa-training/#curriculum");
-		images.add("https://app.facecampus.org/calendar/");
-		images.add("https://chat.openai.com/");
-   new Plant(null);
-		Plant plantWithInvalidName = new Plant(images, 25.0, 4, "Flowering", 30, "Spring", HybridEnum.NO);
+	public void testInvalidPlantObjectNull() throws CustomException{
+//		List<String> images = new ArrayList<String>();
+//		images.add("https://www.youtube.com/watch?v=55tCJ8Odjvw");
+//		images.add("https://learn.facecampus.org/fn/fop-and-dsa-training/#curriculum");
+//		images.add("https://app.facecampus.org/calendar/");
+//		images.add("https://chat.openai.com/");
+ 
+		Plant plantWithInvalidName =   new Plant(null);
 
 		try {
 			PlantValidator.validatePlant(plantWithInvalidName);
@@ -44,20 +45,18 @@ public class TestPlantValidator {
 	}
 
 	@Test
-	public void testValidatePlant_ValidPlant() {
+	public void testValidatePlant_ValidPlant() throws CustomException {
 		List<String> images = new ArrayList<String>();
 		images.add("https://www.youtube.com/watch?v=55tCJ8Odjvw");
 		images.add("https://learn.facecampus.org/fn/fop-and-dsa-training/#curriculum");
 		images.add("https://app.facecampus.org/calendar/");
 		images.add("https://chat.openai.com/");
 		new Plant("rose");
-		Plant validPlant = new Plant(images, 25.0, 4, "Flowering", 30, "Spring", HybridEnum.NO);
-		try {
+		Plant validPlant = new Plant("Sunflower",images, 25.0, 4, "Flowering", 30, "Spring", HybridEnum.NO);
+		
 			boolean result = PlantValidator.validatePlant(validPlant);
 			Assertions.assertTrue(result);
-		} catch (CustomException e) {
-			Assertions.fail("An exception should not have been thrown for a valid plant.");
-		}
+		
 	}
 
 	// testcase for plant name
@@ -66,10 +65,8 @@ public class TestPlantValidator {
 	public void testValidatePlantName_ValidName() {
 		// Arrange
 		String validPlantName = "Sunflower";
-		PlantValidator validator = new PlantValidator();
-
 		try {
-			validator.validatePlantName(validPlantName);
+			PlantValidator.validatePlantName(validPlantName);
 		} catch (CustomException e) {
 			// Assert
 			Assertions.fail("Unexpected exception thrown for a valid plant name.");
@@ -80,12 +77,10 @@ public class TestPlantValidator {
 	public void testValidatePlantName_NullName() {
 		// Arrange
 		String nullPlantName = null;
-		PlantValidator validator = new PlantValidator();
-
 		// Act
 		CustomException exception = null;
 		try {
-			validator.validatePlantName(nullPlantName);
+			PlantValidator.validatePlantName(nullPlantName);
 		} catch (CustomException e) {
 			exception = e;
 		}
@@ -99,12 +94,10 @@ public class TestPlantValidator {
 	public void testValidatePlantName_EmptyName() {
 		// Arrange
 		String emptyPlantName = "";
-		PlantValidator validator = new PlantValidator();
-
 		// Act
 		CustomException exception = null;
 		try {
-			validator.validatePlantName(emptyPlantName);
+			PlantValidator.validatePlantName(emptyPlantName);
 		} catch (CustomException e) {
 			exception = e;
 		}
@@ -117,12 +110,10 @@ public class TestPlantValidator {
 	public void testValidatePlantName_ShortName() {
 		// Arrange
 		String shortPlantName = "AB";
-		PlantValidator validator = new PlantValidator();
-
 		// Act
 		CustomException exception = null;
 		try {
-			validator.validatePlantName(shortPlantName);
+			PlantValidator.validatePlantName(shortPlantName);
 		} catch (CustomException e) {
 			exception = e;
 		}
@@ -139,10 +130,8 @@ public class TestPlantValidator {
 		validUrls.add("https://example.com/image1.jpg");
 		validUrls.add("https://example.com/image2.jpg");
 
-		PlantValidator validator = new PlantValidator();
-
 		try {
-			boolean isValid = validator.validatePlantImagesUrl(validUrls);
+			boolean isValid = PlantValidator.validatePlantImagesUrl(validUrls);
 			Assertions.assertTrue(isValid);
 		} catch (CustomException e) {
 			Assertions.fail(ErrorMessages.INVALID_PLANT_PLANTIMAGESURL);
@@ -152,10 +141,8 @@ public class TestPlantValidator {
 	@Test
 	public void testValidatePlantImagesUrl_NullList() {
 		List<String> nullList = null;
-		PlantValidator validator = new PlantValidator();
-
 		try {
-			validator.validatePlantImagesUrl(nullList);
+			PlantValidator.validatePlantImagesUrl(nullList);
 			Assertions.fail("Should throw a CustomException for a null list.");
 		} catch (CustomException e) {
 			// Test passes if it catches the CustomException
@@ -166,10 +153,8 @@ public class TestPlantValidator {
 	@Test
 	public void testValidatePlantImagesUrl_EmptyList() {
 		List<String> emptyList = new ArrayList<String>();
-		PlantValidator validator = new PlantValidator();
-
 		try {
-			validator.validatePlantImagesUrl(emptyList);
+			PlantValidator.validatePlantImagesUrl(emptyList);
 			Assertions.fail("Should throw a CustomException for an empty list.");
 		} catch (CustomException e) {
 			// Test passes if it catches the CustomException
@@ -182,10 +167,8 @@ public class TestPlantValidator {
 	@Test
 	public void testValidatePrice_Valid() {
 		double validPrice = 25.99;
-		PlantValidator validator = new PlantValidator();
-
 		try {
-			boolean isValid = validator.validatePrice(validPrice);
+			boolean isValid = PlantValidator.validatePrice(validPrice);
 			Assertions.assertTrue(isValid);
 		} catch (CustomException e) {
 			Assertions.fail("Unexpected exception thrown for a valid price.");
@@ -195,11 +178,9 @@ public class TestPlantValidator {
 	@Test
 	public void testValidatePrice_ZeroPrice() {
 		double zeroPrice = 0.0;
-		PlantValidator validator = new PlantValidator();
-
 		CustomException exception = null;
 		try {
-			validator.validatePrice(zeroPrice);
+			PlantValidator.validatePrice(zeroPrice);
 		} catch (CustomException e) {
 			exception = e;
 		}
@@ -211,11 +192,9 @@ public class TestPlantValidator {
 	@Test
 	public void testValidatePrice_NegativePrice() {
 		double negativePrice = -10.50;
-		PlantValidator validator = new PlantValidator();
-
 		CustomException exception = null;
 		try {
-			validator.validatePrice(negativePrice);
+			PlantValidator.validatePrice(negativePrice);
 		} catch (CustomException e) {
 			exception = e;
 		}
@@ -229,10 +208,8 @@ public class TestPlantValidator {
 	@Test
 	public void testValidateRating_Valid() {
 		int validRating = 4;
-		PlantValidator validator = new PlantValidator();
-
 		try {
-			boolean isValid = validator.validateRating(validRating);
+			boolean isValid = PlantValidator.validateRating(validRating);
 			Assertions.assertTrue(isValid);
 		} catch (CustomException e) {
 			Assertions.fail(ErrorMessages.INVALID_PLANT_RATING);
@@ -242,10 +219,8 @@ public class TestPlantValidator {
 	@Test
 	public void testValidateRating_ZeroRating() {
 		int zeroRating = 0;
-		PlantValidator validator = new PlantValidator();
-
 		try {
-			validator.validateRating(zeroRating);
+			PlantValidator.validateRating(zeroRating);
 		} catch (CustomException e) {
 
 			Assertions.assertEquals(ErrorMessages.INVALID_PLANT_RATING_ZERO, e.getMessage());
@@ -256,11 +231,9 @@ public class TestPlantValidator {
 	@Test
 	public void testValidateRating_NegativeRating() {
 		int negativeRating = -2;
-		PlantValidator validator = new PlantValidator();
-
 		CustomException exception = null;
 		try {
-			validator.validateRating(negativeRating);
+			PlantValidator.validateRating(negativeRating);
 		} catch (CustomException e) {
 			exception = e;
 		}
@@ -274,10 +247,8 @@ public class TestPlantValidator {
 	@Test
 	public void testValidatePlantType_Valid() {
 		String validPlantType = "Shrub";
-		PlantValidator validator = new PlantValidator();
-
 		try {
-			boolean isValid = validator.validatePlantType(validPlantType);
+			boolean isValid = PlantValidator.validatePlantType(validPlantType);
 			Assertions.assertTrue(isValid);
 		} catch (CustomException e) {
 			Assertions.fail("Unexpected exception thrown for a valid plant type.");
@@ -287,11 +258,9 @@ public class TestPlantValidator {
 	@Test
 	public void testValidatePlantType_Null() {
 		String nullPlantType = null;
-		PlantValidator validator = new PlantValidator();
-
 		CustomException exception = null;
 		try {
-			validator.validatePlantType(nullPlantType);
+			PlantValidator.validatePlantType(nullPlantType);
 		} catch (CustomException e) {
 			exception = e;
 		}
@@ -303,11 +272,9 @@ public class TestPlantValidator {
 	@Test
 	public void testValidatePlantType_Empty() {
 		String emptyPlantType = "";
-		PlantValidator validator = new PlantValidator();
-
 		CustomException exception = null;
 		try {
-			validator.validatePlantType(emptyPlantType);
+			PlantValidator.validatePlantType(emptyPlantType);
 		} catch (CustomException e) {
 			exception = e;
 		}
@@ -319,11 +286,9 @@ public class TestPlantValidator {
 	@Test
 	public void testValidatePlantType_Short() {
 		String shortPlantType = "A";
-		PlantValidator validator = new PlantValidator();
-
 		CustomException exception = null;
 		try {
-			validator.validatePlantType(shortPlantType);
+			PlantValidator.validatePlantType(shortPlantType);
 		} catch (CustomException e) {
 			exception = e;
 		}
@@ -335,11 +300,9 @@ public class TestPlantValidator {
 	@Test
 	public void testValidatePlantType_ContainsNumbers() {
 		String invalidPlantType = "Plant123";
-		PlantValidator validator = new PlantValidator();
-
 		CustomException exception = null;
 		try {
-			validator.validatePlantType(invalidPlantType);
+			PlantValidator.validatePlantType(invalidPlantType);
 		} catch (CustomException e) {
 			exception = e;
 		}
@@ -353,10 +316,8 @@ public class TestPlantValidator {
 	@Test
 	public void testValidatePlantHeight_Valid() {
 		float validPlantHeight = 0.5f;
-		PlantValidator validator = new PlantValidator();
-
 		try {
-			boolean isValid = validator.validatePlantHeight(validPlantHeight);
+			boolean isValid = PlantValidator.validatePlantHeight(validPlantHeight);
 			Assertions.assertTrue(isValid);
 		} catch (CustomException e) {
 			Assertions.fail("Unexpected exception thrown for a valid plant height.");
@@ -366,11 +327,9 @@ public class TestPlantValidator {
 	@Test
 	public void testValidatePlantHeight_Zero() {
 		float zeroPlantHeight = 0.0f;
-		PlantValidator validator = new PlantValidator();
-
 		CustomException exception = null;
 		try {
-			validator.validatePlantHeight(zeroPlantHeight);
+			PlantValidator.validatePlantHeight(zeroPlantHeight);
 		} catch (CustomException e) {
 			exception = e;
 		}
@@ -382,11 +341,9 @@ public class TestPlantValidator {
 	@Test
 	public void testValidatePlantHeight_Negative() {
 		float negativePlantHeight = -1.5f;
-		PlantValidator validator = new PlantValidator();
-
 		CustomException exception = null;
 		try {
-			validator.validatePlantHeight(negativePlantHeight);
+			PlantValidator.validatePlantHeight(negativePlantHeight);
 		} catch (CustomException e) {
 			exception = e;
 		}
@@ -400,10 +357,8 @@ public class TestPlantValidator {
 	@Test
 	public void testValidatePlantingSeason_Valid() {
 		String validPlantingSeason = "Spring";
-		PlantValidator validator = new PlantValidator();
-
 		try {
-			boolean isValid = validator.validatePlantingSeason(validPlantingSeason);
+			boolean isValid = PlantValidator.validatePlantingSeason(validPlantingSeason);
 			Assertions.assertTrue(isValid);
 		} catch (CustomException e) {
 			Assertions.fail("Unexpected exception thrown for a valid planting season.");
@@ -413,11 +368,9 @@ public class TestPlantValidator {
 	@Test
 	public void testValidatePlantingSeason_Null() {
 		String nullPlantingSeason = null;
-		PlantValidator validator = new PlantValidator();
-
 		CustomException exception = null;
 		try {
-			validator.validatePlantingSeason(nullPlantingSeason);
+			PlantValidator.validatePlantingSeason(nullPlantingSeason);
 		} catch (CustomException e) {
 			exception = e;
 		}
@@ -429,11 +382,9 @@ public class TestPlantValidator {
 	@Test
 	public void testValidatePlantingSeason_Empty() {
 		String emptyPlantingSeason = "";
-		PlantValidator validator = new PlantValidator();
-
 		CustomException exception = null;
 		try {
-			validator.validatePlantingSeason(emptyPlantingSeason);
+			PlantValidator.validatePlantingSeason(emptyPlantingSeason);
 		} catch (CustomException e) {
 			exception = e;
 		}
@@ -445,11 +396,9 @@ public class TestPlantValidator {
 	@Test
 	public void testValidatePlantingSeason_Short() {
 		String shortPlantingSeason = "Win";
-		PlantValidator validator = new PlantValidator();
-
 		CustomException exception = null;
 		try {
-			validator.validatePlantingSeason(shortPlantingSeason);
+			PlantValidator.validatePlantingSeason(shortPlantingSeason);
 		} catch (CustomException e) {
 			exception = e;
 		}
@@ -461,11 +410,9 @@ public class TestPlantValidator {
 	@Test
 	public void testValidatePlantingSeason_ContainsNumbers() {
 		String invalidPlantingSeason = "Season2023";
-		PlantValidator validator = new PlantValidator();
-
 		CustomException exception = null;
 		try {
-			validator.validatePlantingSeason(invalidPlantingSeason);
+			PlantValidator.validatePlantingSeason(invalidPlantingSeason);
 		} catch (CustomException e) {
 			exception = e;
 		}
@@ -479,10 +426,8 @@ public class TestPlantValidator {
 	@Test
 	public void testValidateHybrid_Valid() {
 		HybridEnum validHybrid = HybridEnum.YES;
-		PlantValidator validator = new PlantValidator();
-
 		try {
-			boolean isValid = validator.validateHybrid(validHybrid);
+			boolean isValid = PlantValidator.validateHybrid(validHybrid);
 			Assertions.assertTrue(isValid);
 		} catch (CustomException e) {
 			Assertions.fail(ErrorMessages.INVALID_HYBRID);
@@ -492,11 +437,9 @@ public class TestPlantValidator {
 	@Test
 	public void testValidateHybrid_Null() {
 		HybridEnum nullHybrid = null;
-		PlantValidator validator = new PlantValidator();
-
 		CustomException exception = null;
 		try {
-			validator.validateHybrid(nullHybrid);
+			PlantValidator.validateHybrid(nullHybrid);
 		} catch (CustomException e) {
 			exception = e;
 		}
