@@ -1,3 +1,13 @@
+### Project Name: "VEE BLOOMS"
+
+"Trees are the poems that the Earth writes upon the sky" Vee Blooms is an e-commerce website that sells plants and seeds. Plants and trees make our surroundings beautiful.
+
+Vee Blooms offers:
+
+    1. Can buy all types of plants and seeds.
+    2. Can buy rare plants/ seeds too.
+
+
 # sec_c_sec_c_steffy.alexander__corejava_project_2
 
 ## Database Setup
