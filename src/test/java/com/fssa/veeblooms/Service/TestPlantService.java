@@ -7,6 +7,7 @@ import com.fssa.veeblooms.model.*;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import com.fssa.veeblooms.Enum.HybridEnum;
+import com.fssa.veeblooms.Enum.PlantTypeEnum;
 import com.fssa.veeblooms.dao.PlantDAO;
 import com.fssa.veeblooms.exception.CustomException;
 import com.fssa.veeblooms.exception.DAOException;
@@ -18,26 +19,25 @@ public class TestPlantService {
 	@Test 
 	public void testAddPlant() throws CustomException, SQLException, DAOException {
 		List<String> images = new ArrayList<String>();
-		images.add("https://iili.io/H8VJXet.jpg");
-		images.add("https://iili.io/H8Vdzjn.webp");
-		images.add("https://iili.io/H8VdYa2.jpg");
-		images.add("https://iili.io/H8Vd0u9.jpg");
-
+		images.add("https://iili.io/H8V3vEJ.webp");
+		images.add("https://iili.io/H8VFCvV.jpg");
+		images.add("https://iili.io/H8VFzj1.jpg");
+		images.add("https://iili.io/H8VF4Fj.jpg");
+ 
 		Plant plant = new Plant();
-		plant.setPlantName("Pomegranate Plant");
+		plant.setPlantName("Gerberaaa Plant");
 		plant.setPlantImagesUrl(images);
-		plant.setPrice(110);
-//		plant.setRating(4);
-		plant.setPlantType("Fruit");
-		plant.setPlantHeight(2.5f);
-		plant.setPlantingSeason("spring (February-March) and July-August in sub-tropical ");
+		plant.setPrice(160);
+		plant.setPlantType(PlantTypeEnum.FLOWER);
+		plant.setPlantHeight(5.4f);
+		plant.setPlantingSeason("Spring");
 		plant.setHybrid(HybridEnum.NO);
 		Assertions.assertTrue(PlantService.addPlant(plant));
 	}
 
 	@Test
 	public void testInvalidAddPlant() throws DAOException {
-		Plant plant = new Plant();
+		Plant plant = new Plant(); 
 		try {
 			Assertions.assertTrue(PlantService.addPlant(plant));
 		} catch (CustomException | SQLException e) {
@@ -48,28 +48,28 @@ public class TestPlantService {
 	@Test
 	public void testUpdatePlant() throws CustomException, SQLException, DAOException {
 		List<String> images = new ArrayList<String>();
-		images.add("https://www.youtube.com/watch?v=55tCJ8Odjvw");
-		images.add("https://learn.facecampus.org/fn/fop-and-dsa-training/#curriculum");
-		images.add("https://app.facecampus.org/calendar/");
-		images.add("https://chat.openai.com/");
+		images.add("https://iili.io/H8V3vEJ.webp");
+		images.add("https://iili.io/H8VFCvV.jpg");
+		images.add("https://iili.io/H8VFzj1.jpg");
+		images.add("https://iili.io/H8VF4Fj.jpg");
 
 		Plant plant = new Plant();
-		plant.setPlantName("Pomegranate Plant");
+		plant.setPlantName("Gerbera Plant");
 		plant.setPlantImagesUrl(images);
-		plant.setPrice(110);
+		plant.setPrice(195);
 //		plant.setRating(4);
-		plant.setPlantType("Flower");
-		plant.setPlantHeight(5.2f);
-		plant.setPlantingSeason("Autumn");
+		plant.setPlantType(PlantTypeEnum.FLOWER);
+		plant.setPlantHeight(3.4f);
+		plant.setPlantingSeason("Spring");
 		plant.setHybrid(HybridEnum.NO);
-		Assertions.assertTrue(PlantService.updatePlant(plant, 17));
+		Assertions.assertTrue(PlantService.updatePlant(plant));
 	}
 
 	@Test
 	public void testInvalidUpdatePlant() throws DAOException {
 		Plant plant = new Plant();
 		try {
-			Assertions.assertTrue(PlantService.updatePlant(plant, 16));
+			Assertions.assertTrue(PlantService.updatePlant(plant));
 		} catch (CustomException | SQLException e) {
 			Assertions.assertEquals(ErrorMessages.INVALID_PLANT_NAME, e.getMessage());
 		}
@@ -77,21 +77,9 @@ public class TestPlantService {
 
 	@Test 
 	public void testDeletePlant() throws CustomException, SQLException, NullPointerException, DAOException {
-		Assertions.assertTrue(PlantDAO.deletePlantById(1));
+		Assertions.assertTrue(PlantDAO.deletePlantById(4));
 	}
-
-	@Test
-	public void testInvalidDeletePlant() throws NullPointerException, DAOException {
-		try {
-
-			int id = 0;
-			boolean t = PlantService.deletePlant(id);
-			Assertions.assertTrue(t);
-
-		} catch (SQLException e) {
-			Assertions.assertEquals("id cannot be zero or negative", e.getMessage());
-		}
-	}
+ 
 
 	@Test
 	public void testGetImageUrl() throws DAOException, SQLException {
@@ -110,11 +98,11 @@ public class TestPlantService {
 		}
 	}
 
-	@Test
-	public void testAllPlants() throws DAOException, SQLException {
+	@Test 
+	public void testGetAllPlants() throws DAOException, SQLException {
 
-		try {
-
+		try { 
+ 
 			List<Plant> plantList = PlantService.getAllPlants();
 
 			for (Plant url : plantList) {

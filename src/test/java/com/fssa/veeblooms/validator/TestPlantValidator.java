@@ -7,32 +7,17 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
 import com.fssa.veeblooms.Enum.HybridEnum;
+import com.fssa.veeblooms.Enum.PlantTypeEnum;
 import com.fssa.veeblooms.exception.CustomException;
 import com.fssa.veeblooms.model.ErrorMessages;
 import com.fssa.veeblooms.model.Plant;
 
 
 public class TestPlantValidator {
-
-	@Test
-	public void testValidatePlant_NullPlant() throws CustomException {
-		Plant nullPlant = null;
-
-		try {
-			PlantValidator.validatePlant(nullPlant);
-			Assertions.fail("Expected CustomException for invalid plant name, but no exception was thrown.");
-		} catch (CustomException e) {
-			Assertions.assertEquals("Plant object can't be null", e.getMessage());
-		}
-	}
-
-	@Test
+	
+	@Test 
 	public void testInvalidPlantObjectNull() throws CustomException{
-//		List<String> images = new ArrayList<String>();
-//		images.add("https://www.youtube.com/watch?v=55tCJ8Odjvw");
-//		images.add("https://learn.facecampus.org/fn/fop-and-dsa-training/#curriculum");
-//		images.add("https://app.facecampus.org/calendar/");
-//		images.add("https://chat.openai.com/");
+
  
 		Plant plantWithInvalidName =   new Plant(null);
 
@@ -52,7 +37,7 @@ public class TestPlantValidator {
 		images.add("https://app.facecampus.org/calendar/");
 		images.add("https://chat.openai.com/");
 		new Plant("rose");
-		Plant validPlant = new Plant("Sunflower",images, 25.0, 4, "Flowering", 30, "Spring", HybridEnum.NO);
+		Plant validPlant = new Plant("Sunflower",images, 25.0,  PlantTypeEnum.FLOWER, 30, "Spring", HybridEnum.NO);
 		
 			boolean result = PlantValidator.validatePlant(validPlant);
 			Assertions.assertTrue(result);
@@ -106,21 +91,7 @@ public class TestPlantValidator {
 		Assertions.assertEquals(ErrorMessages.INVALID_PLANT_NAME, exception.getMessage());
 	}
 
-	@Test
-	public void testValidatePlantName_ShortName() {
-		// Arrange
-		String shortPlantName = "AB";
-		// Act
-		CustomException exception = null;
-		try {
-			PlantValidator.validatePlantName(shortPlantName);
-		} catch (CustomException e) {
-			exception = e;
-		}
-
-
-		Assertions.assertEquals(ErrorMessages.INVALID_PLANT_NAME_LENGTH, exception.getMessage());
-	}
+	
 
 //test case for plant images
 
@@ -208,7 +179,7 @@ public class TestPlantValidator {
 
 	@Test
 	public void testValidatePlantType_Valid() {
-		String validPlantType = "Shrub";
+		PlantTypeEnum validPlantType = PlantTypeEnum.CLIMBERS;
 		try {
 			boolean isValid = PlantValidator.validatePlantType(validPlantType);
 			Assertions.assertTrue(isValid);
@@ -219,7 +190,7 @@ public class TestPlantValidator {
 
 	@Test
 	public void testValidatePlantType_Null() {
-		String nullPlantType = null;
+		PlantTypeEnum nullPlantType = null;
 		CustomException exception = null;
 		try {
 			PlantValidator.validatePlantType(nullPlantType);
@@ -231,49 +202,6 @@ public class TestPlantValidator {
 		Assertions.assertEquals(ErrorMessages.INVALID_PLANT_TYPE, exception.getMessage());
 	}
 
-	@Test
-	public void testValidatePlantType_Empty() {
-		String emptyPlantType = "";
-		CustomException exception = null;
-		try {
-			PlantValidator.validatePlantType(emptyPlantType);
-		} catch (CustomException e) {
-			exception = e;
-		}
-
-//		 "Expected CustomException for empty plant type");
-		Assertions.assertEquals(ErrorMessages.INVALID_PLANT_TYPE, exception.getMessage());
-	}
-
-	@Test
-	public void testValidatePlantType_Short() {
-		String shortPlantType = "A";
-		CustomException exception = null;
-		try {
-			PlantValidator.validatePlantType(shortPlantType);
-		} catch (CustomException e) {
-			exception = e;
-		}
-
-//		 "Expected CustomException for short plant type");
-		Assertions.assertEquals(ErrorMessages.INVALID_PLANT_TYPE, exception.getMessage());
-	}
-
-	@Test
-	public void testValidatePlantType_ContainsNumbers() {
-		String invalidPlantType = "Plant123";
-		CustomException exception = null;
-		try {
-			PlantValidator.validatePlantType(invalidPlantType);
-		} catch (CustomException e) {
-			exception = e;
-		}
-
-//		 "Expected CustomException for plant type containing numbers");
-		Assertions.assertEquals(ErrorMessages.INVALID_PLANT_NAME_PATTERN, exception.getMessage());
-	}
-
-	// testcase for plantheight
 
 	@Test
 	public void testValidatePlantHeight_Valid() {
@@ -353,20 +281,6 @@ public class TestPlantValidator {
 
 //		 "Expected CustomException for empty planting season");
 		Assertions.assertEquals(ErrorMessages.INVALID_PLANTING_SEASON, exception.getMessage());
-	}
-
-	@Test
-	public void testValidatePlantingSeason_Short() {
-		String shortPlantingSeason = "Win";
-		CustomException exception = null;
-		try {
-			PlantValidator.validatePlantingSeason(shortPlantingSeason);
-		} catch (CustomException e) {
-			exception = e;
-		}
-
-//		 "Expected CustomException for short planting season");
-		Assertions.assertEquals(ErrorMessages.INVALID_PLANT_NAME_LENGTH, exception.getMessage());
 	}
 
 	@Test

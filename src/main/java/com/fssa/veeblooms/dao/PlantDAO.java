@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fssa.veeblooms.Enum.HybridEnum;
+import com.fssa.veeblooms.Enum.PlantTypeEnum;
 import com.fssa.veeblooms.exception.DAOException;
 import com.fssa.veeblooms.model.ErrorMessages;
 import com.fssa.veeblooms.model.Plant;
@@ -19,7 +20,6 @@ import com.fssa.veeblooms.util.Logger;
 public class PlantDAO {
 
 	public static void addPlant(Plant plant) throws DAOException, SQLException {
-System.out.println(plant.getPlantName());
 		if (PlantDAO.checkplantName(plant.getPlantName())) {
 
 			throw new DAOException(ErrorMessages.INVALID_PLANTNAME_ALREADY_EXISTS + plant.getPlantName());
@@ -35,7 +35,7 @@ System.out.println(plant.getPlantName());
 
 				pst.setString(1, plant.getPlantName());
 				pst.setDouble(2, plant.getPrice());
-				pst.setString(3, plant.getPlantType());
+				pst.setString(3, plant.getPlantType() + "");
 				pst.setFloat(4, plant.getPlantHeight());
 				pst.setString(5, plant.getPlantingSeason());
 				pst.setString(6, plant.getHybrid().toString());
@@ -48,12 +48,11 @@ System.out.println(plant.getPlantName());
 			}
 
 		} catch (SQLException e) {
-			 e.printStackTrace();
+			e.printStackTrace();
 			throw new DAOException(ErrorMessages.INVALID_PLANT_CREATING);
 		}
 	}
 
-						
 	public static boolean checkplantName(String plantName) throws DAOException, SQLException {
 		try (Connection connection = ConnectionUtil.getConnection()) {
 			// Create update statement using task id
@@ -61,27 +60,24 @@ System.out.println(plant.getPlantName());
 			try (PreparedStatement pst = connection.prepareStatement(query)) {
 				pst.setString(1, plantName);
 
-				try(ResultSet rs = pst.executeQuery()){
+				try (ResultSet rs = pst.executeQuery()) {
 					if (rs.next()) {
-						 // count=1
+						// count=1
 						return true;
-						
-					}
-					else {
+
+					} else {
 						// 1 > 0 ===> true
 						return false;
 						// 0 > 0 ===> false
 					}
 				}
 
-				
 			}
 		} catch (SQLException e) {
-			throw new DAOException(ErrorMessages.INVALID_PLANT_CHECKING_ERROR +e.getMessage());
-			
+			throw new DAOException(ErrorMessages.INVALID_PLANT_CHECKING_ERROR + e.getMessage());
 
 		}
-		
+
 	}
 
 	// This method is used for getting id from the database by using plant name
@@ -161,21 +157,21 @@ System.out.println(plant.getPlantName());
 		}
 	}
 
-	public static void updatePlant(Plant plant, int plantId) throws DAOException, SQLException {
+	public static void updatePlant(Plant plant) throws DAOException, SQLException {
 
 		try (Connection connection = ConnectionUtil.getConnection()) {
 			// Create update statement using task id
-			String updatequery = "UPDATE plant SET plantName = ?, price = ?, rating = ?, plantType = ?, plantHeight = ?, plantingSeason = ?, hybrid = ? WHERE plant_id = ?";
+			String updatequery = "UPDATE plant SET plantName = ?, price = ?, plantType = ?, plantHeight = ?, plantingSeason = ?, hybrid = ? WHERE plant_id = ?";
 
 			try (PreparedStatement pst = connection.prepareStatement(updatequery)) {
 				pst.setString(1, plant.getPlantName());
 				pst.setDouble(2, plant.getPrice());
 //				pst.setInt(3, plant.getRating());
-				pst.setString(4, plant.getPlantType());
-				pst.setFloat(5, plant.getPlantHeight());
-				pst.setString(6, plant.getPlantingSeason());
-				pst.setString(7, plant.getHybrid().toString());
-				pst.setInt(8, plantId);
+				pst.setString(3, plant.getPlantType() + "");
+				pst.setFloat(4, plant.getPlantHeight());
+				pst.setString(5, plant.getPlantingSeason());
+				pst.setString(6, plant.getHybrid().toString());
+				pst.setInt(7, getPlantIdByName(plant.getPlantName()));
 				pst.executeUpdate();
 			}
 		} catch (SQLException e) {
@@ -218,7 +214,6 @@ System.out.println(plant.getPlantName());
 
 				ResultSet rs = pst.executeQuery();
 
-
 				Plant plant = new Plant();
 
 				while (rs.next()) {
@@ -226,10 +221,10 @@ System.out.println(plant.getPlantName());
 					plant.setPlantName(rs.getString("plantName"));
 					plant.setPrice(rs.getDouble("price"));
 					plant.setPlantingSeason(rs.getString("plantingSeason"));
-					plant.setPlantType(rs.getString("plantType"));
+					plant.setPlantType(PlantTypeEnum.valueOf(rs.getString("plantType").toUpperCase()));
 					plant.setPlantHeight(rs.getFloat("plantHeight"));
 //					plant.setRating(rs.getInt("rating"));
-					plant.setHybrid(HybridEnum.valueOf(rs.getString("hybrid")));
+					plant.setHybrid(HybridEnum.valueOf(rs.getString("hybrid").toUpperCase()));
 				}
 
 				return plant;
@@ -274,17 +269,17 @@ System.out.println(plant.getPlantName());
 
 	public static Plant createPlantFromResultSet(ResultSet rs) throws SQLException, DAOException {
 
-		Plant plant = new Plant(); 
+		Plant plant = new Plant();
 		int plantId = getPlantIdByName(rs.getString("plantName"));
 		plant.setPlantId(plantId);
 		plant.setPlantName(rs.getString("plantName"));
 		plant.setPlantImagesUrl(getPlantImageUrls(plantId));
 		plant.setPrice(rs.getDouble("price"));
 //		plant.setRating(rs.getInt("rating"));
-		plant.setPlantType(rs.getString("plantType"));
+		plant.setPlantType(PlantTypeEnum.valueOf(rs.getString("plantType").toUpperCase()));
 		plant.setPlantHeight(rs.getFloat("plantHeight"));
 		plant.setPlantingSeason(rs.getString("plantingSeason"));
-		plant.setHybrid(HybridEnum.valueOf(rs.getString("hybrid")));
+		plant.setHybrid(HybridEnum.valueOf(rs.getString("hybrid").toUpperCase()));
 
 		// Returning the product object.
 		return plant;

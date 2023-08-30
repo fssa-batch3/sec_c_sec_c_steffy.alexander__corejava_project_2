@@ -33,11 +33,11 @@ public class PlantService {
 
 	}
 
-	public static boolean updatePlant(Plant plant, int plantId) throws DAOException, SQLException, CustomException {
+	public static boolean updatePlant(Plant plant) throws DAOException, SQLException, CustomException {
 
 		if (PlantValidator.validatePlant(plant)) {
 
-			PlantDAO.updatePlant(plant, plantId);
+			PlantDAO.updatePlant(plant);
 
 		}
 
@@ -45,25 +45,18 @@ public class PlantService {
 
 	}
 
-	public static boolean deletePlant(int i) throws DAOException, SQLException {
+	public static boolean deletePlant(int id) throws DAOException, SQLException {
 
-		PlantDAO.deletePlantById(8);
+		PlantDAO.deletePlantById(id);
 
 		return true;
 
-	}
-
-	public static PlantValidator getPlantValidator() {
-		return plantValidator;
 	}
 
 	public static void setPlantValidator(PlantValidator plantValidator) {
 		PlantService.plantValidator = plantValidator;
 	}
 
-	public static PlantDAO getPlantDAO() {
-		return plantDAO;
-	}
 
 	public static void setPlantDAO(PlantDAO plantDAO) {
 		PlantService.plantDAO = plantDAO;
@@ -84,7 +77,6 @@ public class PlantService {
 
 		return PlantDAO.getPlantIdByName(name);
 	}
-	
 	
 	
 	public static Plant getPlantById(int id) throws DAOException, SQLException {

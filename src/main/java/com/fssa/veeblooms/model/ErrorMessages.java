@@ -23,5 +23,6 @@ public interface ErrorMessages {
 	public static final String ERROR_GETTING_PLANTNAME= "Error getting id by plant name";
 	public static final String ERROR_ADDING_IMAGEURL= "Error in adding plant image urls ";
 	public static final String ERROR_GETTING_PLANTID="Error in getting plant id";
+
 }
 

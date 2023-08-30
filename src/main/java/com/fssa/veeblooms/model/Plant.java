@@ -3,6 +3,7 @@ package com.fssa.veeblooms.model;
 import java.util.List;
 
 import com.fssa.veeblooms.Enum.HybridEnum;
+import com.fssa.veeblooms.Enum.PlantTypeEnum;
 
 
 public class Plant {
@@ -11,7 +12,7 @@ public class Plant {
 	private List<String> plantImagesUrl;
 	private double price;
 //	private int rating;
-	private String plantType;
+	private PlantTypeEnum plantType;
 	private float plantHeight;
 	private String plantingSeason;
 	private HybridEnum hybrid;
@@ -29,7 +30,7 @@ public class Plant {
 	}
 
 	public void setPlantName(String plantName) {
-		this.plantName = plantName;
+		this.plantName = plantName; 
 	}
 
 	public List<String> getPlantImagesUrl() {
@@ -56,11 +57,11 @@ public class Plant {
 //		this.rating = rating;
 //	}
 
-	public String getPlantType() {
+	public PlantTypeEnum getPlantType() {
 		return plantType;
 	}
 
-	public void setPlantType(String plantType) {
+	public void setPlantType(PlantTypeEnum plantType) {
 		this.plantType = plantType;
 	}
 
@@ -89,7 +90,7 @@ public class Plant {
 	}
 
 
-	public Plant(String plantName, List<String> plantImagesUrl, double price, int rating, String plantType,
+	public Plant(String plantName, List<String> plantImagesUrl, double price, PlantTypeEnum plantType,
 			float plantHeight, String plantingSeason, HybridEnum hybrid) {
 		super();
 		this.plantName = plantName;
@@ -118,5 +119,6 @@ public class Plant {
 	public Plant() {
 
 	}
+	
 
 }

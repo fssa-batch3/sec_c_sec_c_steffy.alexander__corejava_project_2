@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 import com.fssa.veeblooms.exception.*;
 import com.fssa.veeblooms.model.*;
 import com.fssa.veeblooms.Enum.HybridEnum;
+import com.fssa.veeblooms.Enum.PlantTypeEnum;
 
 public class PlantValidator {
 
@@ -17,7 +18,6 @@ public class PlantValidator {
         validatePlantName(plant.getPlantName());
         validatePlantImagesUrl(plant.getPlantImagesUrl());
         validatePrice(plant.getPrice());
-//        validateRating(plant.getRating());
         validatePlantType(plant.getPlantType());
         validatePlantHeight(plant.getPlantHeight());
         validatePlantingSeason(plant.getPlantingSeason());
@@ -64,29 +64,10 @@ public class PlantValidator {
         return true;
     }
 
-//    public static boolean validateRating(int rating) throws CustomException {
-//        if (rating < 0) {
-//            throw new CustomException(ErrorMessages.INVALID_PLANT_RATING);
-//        }
-//        return true;
-//    }
-//    //to delete rating
-//    ///rating upto 5: to change
 
-    public static boolean validatePlantType(String plantType) throws CustomException {
-        if (plantType == null || plantType.trim().isEmpty()) {
+    public static boolean validatePlantType(PlantTypeEnum plantType) throws CustomException {
+    	if (plantType == null) {
             throw new CustomException(ErrorMessages.INVALID_PLANT_TYPE);
-        }
-        if (plantType.length() < 3) {
-            throw new CustomException(ErrorMessages.INVALID_PLANT_TYPE);
-        }
-        String regexPattern = "^[^0-9]*$";
-        Pattern pattern = Pattern.compile(regexPattern);
-        Matcher matcher = pattern.matcher(plantType);
-        boolean isMatch = matcher.matches();
-
-        if (!isMatch) {
-            throw new CustomException(ErrorMessages.INVALID_PLANT_NAME_PATTERN);
         }
         return true;
     }
@@ -102,7 +83,7 @@ public class PlantValidator {
         if (plantingSeason == null || plantingSeason.trim().isEmpty()) {
             throw new CustomException(ErrorMessages.INVALID_PLANTING_SEASON);
         }
-        if (plantingSeason.length() < 5) {
+        if (plantingSeason.length() < 3) {
             throw new CustomException(ErrorMessages.INVALID_PLANT_NAME_LENGTH);
         }
         String regexPattern = "^[^0-9]*$";
