@@ -22,6 +22,6 @@ public interface ErrorMessages {
 	public static final String INVALID_PLANT_CHECKING_ERROR= "Error while checking whether the plant already exists";
 	public static final String ERROR_GETTING_PLANTNAME= "Error getting id by plant name";
 	public static final String ERROR_ADDING_IMAGEURL= "Error in adding plant image urls ";
-	
+	public static final String ERROR_GETTING_PLANTID="Error in getting plant id";
 }
 

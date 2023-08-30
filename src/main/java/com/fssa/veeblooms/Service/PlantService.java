@@ -1,6 +1,8 @@
 package com.fssa.veeblooms.Service;
 
 import java.sql.SQLException;
+import java.util.List;
+
 import com.fssa.veeblooms.dao.PlantDAO;
 import com.fssa.veeblooms.exception.CustomException;
 import com.fssa.veeblooms.exception.DAOException;
@@ -12,15 +14,14 @@ public class PlantService {
 	private static PlantValidator plantValidator;
 	private static PlantDAO plantDAO;
 
-	PlantService(PlantValidator plantValidator, PlantDAO plantDAO) {
+	public PlantService(PlantValidator plantValidator, PlantDAO plantDAO) {
 		PlantService.setPlantValidator(plantValidator);
 		PlantService.setPlantDAO(plantDAO);
 	}
 
-	public PlantService() {
-	}
 
-	public static boolean addPlant(Plant plant) throws CustomException,DAOException, SQLException {
+
+	public static boolean addPlant(Plant plant) throws CustomException, DAOException, SQLException {
 
 		if (PlantValidator.validatePlant(plant)) {
 
@@ -68,4 +69,28 @@ public class PlantService {
 		PlantService.plantDAO = plantDAO;
 	}
 
+	public static List<String> getPlantImageUrls(int plantid) throws DAOException, SQLException {
+
+		return PlantDAO.getPlantImageUrls(plantid);
+	}
+
+	public static List<Plant> getAllPlants() throws DAOException, SQLException {
+
+		return PlantDAO.getAllPlant();
+	}
+	
+
+	public static int getPlantIdByName(String name) throws DAOException, SQLException {
+
+		return PlantDAO.getPlantIdByName(name);
+	}
+	
+	
+	
+	public static Plant getPlantById(int id) throws DAOException, SQLException {
+
+		return PlantDAO.getPlantById(id);
+	}
+	
+	
 }

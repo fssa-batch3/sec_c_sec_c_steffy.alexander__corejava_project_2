@@ -17,7 +17,7 @@ public class PlantValidator {
         validatePlantName(plant.getPlantName());
         validatePlantImagesUrl(plant.getPlantImagesUrl());
         validatePrice(plant.getPrice());
-        validateRating(plant.getRating());
+//        validateRating(plant.getRating());
         validatePlantType(plant.getPlantType());
         validatePlantHeight(plant.getPlantHeight());
         validatePlantingSeason(plant.getPlantingSeason());
@@ -64,12 +64,14 @@ public class PlantValidator {
         return true;
     }
 
-    public static boolean validateRating(int rating) throws CustomException {
-        if (rating < 0) {
-            throw new CustomException(ErrorMessages.INVALID_PLANT_RATING);
-        }
-        return true;
-    }
+//    public static boolean validateRating(int rating) throws CustomException {
+//        if (rating < 0) {
+//            throw new CustomException(ErrorMessages.INVALID_PLANT_RATING);
+//        }
+//        return true;
+//    }
+//    //to delete rating
+//    ///rating upto 5: to change
 
     public static boolean validatePlantType(String plantType) throws CustomException {
         if (plantType == null || plantType.trim().isEmpty()) {

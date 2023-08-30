@@ -203,45 +203,7 @@ public class TestPlantValidator {
 		Assertions.assertEquals(ErrorMessages.INVALID_PLANT_PRICE, exception.getMessage());
 	}
 
-	// testcase for plant rating
-
-	@Test
-	public void testValidateRating_Valid() {
-		int validRating = 4;
-		try {
-			boolean isValid = PlantValidator.validateRating(validRating);
-			Assertions.assertTrue(isValid);
-		} catch (CustomException e) {
-			Assertions.fail(ErrorMessages.INVALID_PLANT_RATING);
-		}
-	}
-
-	@Test
-	public void testValidateRating_ZeroRating() {
-		int zeroRating = 0;
-		try {
-			PlantValidator.validateRating(zeroRating);
-		} catch (CustomException e) {
-
-			Assertions.assertEquals(ErrorMessages.INVALID_PLANT_RATING_ZERO, e.getMessage());
-		}
-
-	}
-
-	@Test
-	public void testValidateRating_NegativeRating() {
-		int negativeRating = -2;
-		CustomException exception = null;
-		try {
-			PlantValidator.validateRating(negativeRating);
-		} catch (CustomException e) {
-			exception = e;
-		}
-
-//		 "Expected CustomException for negative rating");
-		Assertions.assertEquals(ErrorMessages.INVALID_PLANT_RATING, exception.getMessage());
-	}
-
+	
 	// testcase for planttype
 
 	@Test

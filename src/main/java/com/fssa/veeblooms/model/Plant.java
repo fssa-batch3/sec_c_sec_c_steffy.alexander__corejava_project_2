@@ -6,15 +6,23 @@ import com.fssa.veeblooms.Enum.HybridEnum;
 
 
 public class Plant {
-	
+	private int plantId;
 	private String plantName;
 	private List<String> plantImagesUrl;
 	private double price;
-	private int rating;
+//	private int rating;
 	private String plantType;
 	private float plantHeight;
 	private String plantingSeason;
 	private HybridEnum hybrid;
+
+	public int getPlantId() {
+     	return plantId;
+	}
+
+	public void setPlantId(int plantId) {
+		this.plantId = plantId;
+	}
 
 	public String getPlantName() {
 		return plantName;
@@ -40,13 +48,13 @@ public class Plant {
 		this.price = price;
 	}
 
-	public int getRating() {
-		return rating;
-	}
-
-	public void setRating(int rating) {
-		this.rating = rating;
-	}
+//	public int getRating() {
+//		return rating;
+//	}
+//
+//	public void setRating(int rating) {
+//		this.rating = rating;
+//	}
 
 	public String getPlantType() {
 		return plantType;
@@ -87,7 +95,7 @@ public class Plant {
 		this.plantName = plantName;
 		this.plantImagesUrl = plantImagesUrl;
 		this.price = price;
-		this.rating = rating;
+//		this.rating = rating;
 		this.plantType = plantType;
 		this.plantHeight = plantHeight;
 		this.plantingSeason = plantingSeason;
@@ -97,44 +105,18 @@ public class Plant {
 	public Plant(String plantName) {
 		this.plantName = plantName;
 	}
+	
+	
+
+	@Override
+	public String toString() {
+		return "Plant [plantId=" + plantId + ", plantName=" + plantName + ", plantImagesUrl=" + plantImagesUrl
+				+ ", price=" + price + ", plantType=" + plantType + ", plantHeight="
+				+ plantHeight + ", plantingSeason=" + plantingSeason + ", hybrid=" + hybrid + "]";
+	}
 
 	public Plant() {
 
 	}
 
-//	public static void main(String[] args) throws CustomException, SQLException {
-//
-//		List<String> images = new ArrayList<String>();
-//		images.add("https://www.youtube.com/watch?v=55tCJ8Odjvw");
-//		images.add("https://learn.facecampus.org/fn/fop-and-dsa-training/#curriculum");
-//		images.add("https://app.facecampus.org/calendar/");
-//		images.add("https://chat.openai.com/");
-//
-//		Plant plant = new Plant();
-//		plant.setPlantName("rose plant");
-//		plant.setPlantImagesUrl(images);
-//		plant.setPrice(250);
-//		plant.setRating(5);
-//		plant.setPlantType("Flower");
-//		plant.setPlantHeight(5.2f);
-//		plant.setPlantingSeason("Autumn");
-//		plant.setHybrid(HybridEnum.YES);
-//
-//		PlantService plantService = new PlantService(new PlantValidator(), new PlantDAO());
-
-//		plantService.addPlant(plant); 
-		
-		
-//		int deleteId = 4;
-//
-//		PlantDAO.deletePlantById(15);
-		
-
-
-				
-//				plantService.updatePlant(plant,17);
-				//plantService.deletePlant(12);
-//		plantService.deletePlant(12);
-
-	}
-//}
+}

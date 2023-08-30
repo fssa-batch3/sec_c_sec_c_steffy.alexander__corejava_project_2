@@ -14,6 +14,7 @@ CREATE TABLE `plant` (
 );
 
 select * from  plant;
+alter table plant drop column rating;
 
 UPDATE plant SET plantName = 'rose plant', price = 200.0, rating = 5, plantType = 'Flower', plantHeight = 5.2, plantingSeason = 'Autumn', hybrid = 'YES' WHERE plant_id = 5;
 
@@ -22,10 +23,8 @@ CREATE TABLE `plantimagesurl` (
   `plant_id` int NOT NULL,
   `image_url` varchar(100) NOT NULL,
   PRIMARY KEY (`url_id`),
-  KEY `plant_id` (`plant_id`),
-  CONSTRAINT `plantimagesurl_ibfk_1` FOREIGN KEY (`plant_id`) REFERENCES `plant` (`plant_id`)
-);
-
+  foreign KEY (`plant_id`) references plant (`plant_id`) on delete cascade
+  );
 select * from plantimagesurl;
 
 DELIMITER && 
@@ -40,3 +39,6 @@ BEGIN
       --   DELETE FROM plant WHERE plant_id = plant_ids;
 END &&
 DELIMITER ;
+
+
+
