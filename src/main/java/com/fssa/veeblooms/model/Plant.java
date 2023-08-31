@@ -11,7 +11,6 @@ public class Plant {
 	private String plantName;
 	private List<String> plantImagesUrl;
 	private double price;
-//	private int rating;
 	private PlantTypeEnum plantType;
 	private float plantHeight;
 	private String plantingSeason;
@@ -96,7 +95,6 @@ public class Plant {
 		this.plantName = plantName;
 		this.plantImagesUrl = plantImagesUrl;
 		this.price = price;
-//		this.rating = rating;
 		this.plantType = plantType;
 		this.plantHeight = plantHeight;
 		this.plantingSeason = plantingSeason;

@@ -32,19 +32,19 @@ public class TestPlantService {
 	public void testAddPlant() throws CustomException, SQLException, DAOException {
 		// Prepare plant images URLs
 		List<String> images = new ArrayList<String>();
-		images.add("https://iili.io/H8VJXet.jpg");
-		images.add("https://iili.io/H8Vdzjn.webp");
-		images.add("https://iili.io/H8VdYa2.jpg");
-		images.add("https://iili.io/H8Vd0u9.jpg");
+		images.add("https://iili.io/HNOKOYb.jpg");
+		images.add("https://iili.io/HNOqRgn.jpg");
+		images.add("https://iili.io/HNOqRgn.jpg");
+		images.add("https://iili.io/HNOoMjj.jpg");
  
 		// Create a Plant object
 		Plant plant = new Plant();
-		plant.setPlantName("Pomegranate Plant");
+		plant.setPlantName("Dieffenbranchia");
 		plant.setPlantImagesUrl(images);
 		plant.setPrice(210);
-		plant.setPlantType(PlantTypeEnum.FRUIT);
+		plant.setPlantType(PlantTypeEnum.PLANT);
 		plant.setPlantHeight(3.4f);
-		plant.setPlantingSeason("Spring");
+		plant.setPlantingSeason("Early Spring");
 		plant.setHybrid(HybridEnum.NO);
 
 		Assertions.assertTrue(PlantService.addPlant(plant));
@@ -85,10 +85,10 @@ public class TestPlantService {
 
 		// Create a Plant object for updating
 		Plant plant = new Plant();
-		plant.setPlantName("Gerbera Plant");
+		plant.setPlantName("Dieffenbranchia");
 		plant.setPlantImagesUrl(images);
-		plant.setPrice(195);
-		plant.setPlantType(PlantTypeEnum.FLOWER);
+		plant.setPrice(220);
+		plant.setPlantType(PlantTypeEnum.PLANT);
 		plant.setPlantHeight(3.4f);
 		plant.setPlantingSeason("Spring");
 		plant.setHybrid(HybridEnum.NO);
@@ -119,7 +119,7 @@ public class TestPlantService {
 	public void testDeletePlant() throws CustomException, SQLException, NullPointerException, DAOException {
 	
 		Plant plant = new Plant();
-		plant.setPlantName("Pomegranate Plant");
+		plant.setPlantName("Dieffenbranchia");
 		
 		if(PlantDAO.checkplantName(plant.getPlantName())) {
 			Assertions.assertTrue(PlantDAO.deletePlantById(PlantDAO.getPlantIdByName(plant.getPlantName())));
