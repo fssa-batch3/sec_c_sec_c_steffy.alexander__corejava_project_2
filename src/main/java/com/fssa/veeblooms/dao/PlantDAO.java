@@ -19,14 +19,27 @@ import com.fssa.veeblooms.util.Logger;
 
 public class PlantDAO {
 
-	public static void addPlant(Plant plant) throws DAOException, SQLException {
-		if (PlantDAO.checkplantName(plant.getPlantName())) {
+	
+	/**
+	 * Adds a new plant to the database if the plant name does not already exist.
+	 *
+	 * @param plant The Plant object containing the information of the plant to be added.
+	 * @throws DAOException If there is an issue with the DAO operations.
+	 * @throws SQLException If a database access error occurs.
+	 */
 
+	
+	
+	public static void addPlant(Plant plant) throws DAOException, SQLException {
+		  // Check if the plant name already exists in the database
+		if (PlantDAO.checkplantName(plant.getPlantName())) {
+	
 			throw new DAOException(ErrorMessages.INVALID_PLANTNAME_ALREADY_EXISTS + plant.getPlantName());
 
 		}
 
 		try (Connection connection = ConnectionUtil.getConnection()) {
+			 // SQL query to insert the plant information into the 'plant' table
 			String insertQuery = "INSERT INTO plant (plantName, price,  plantType, plantHeight, plantingSeason, hybrid) VALUES (?, ?, ?, ?, ?, ?)";
 
 			// Execute insert statement
@@ -40,6 +53,8 @@ public class PlantDAO {
 				pst.setString(5, plant.getPlantingSeason());
 				pst.setString(6, plant.getHybrid().toString());
 
+				  // Execute the insert statement and get the number of affected rows
+				
 				int rowaffected = pst.executeUpdate();
 
 				Logger.info("row/rows affected: " + rowaffected);
@@ -53,6 +68,18 @@ public class PlantDAO {
 		}
 	}
 
+	
+	/**
+	 * Checks if a plant with the specified name exists in the database.
+	 *
+	 * @param plantName The name of the plant to be checked.
+	 * @return {@code true} if a plant with the given name exists, {@code false} otherwise.
+	 * @throws DAOException If there is an issue with the DAO operations.
+	 * @throws SQLException If a database access error occurs.
+	 * 
+	 */
+	
+	
 	public static boolean checkplantName(String plantName) throws DAOException, SQLException {
 		try (Connection connection = ConnectionUtil.getConnection()) {
 			// Create update statement using task id
@@ -81,6 +108,15 @@ public class PlantDAO {
 	}
 
 	// This method is used for getting id from the database by using plant name
+	
+	/**
+	 * Retrieves the plant ID associated with the given plant name from the database.
+	 *
+	 * @param plantName The name of the plant for which the ID needs to be retrieved.
+	 * @return The plant ID associated with the specified name.
+	 * @throws DAOException If there is an issue with the DAO operations.
+	 * @throws SQLException If a database access error occurs.
+	 */
 
 	public static int getPlantIdByName(String plantName) throws DAOException, SQLException {
 
@@ -112,10 +148,23 @@ public class PlantDAO {
 		}
 	}
 
+	
+	
+	/**
+	 * Adds image URLs associated with a plant to the database.
+	 *
+	 * @param plant The Plant object containing the information of the plant and its image URLs.
+	 * @return {@code true} if the image URLs were successfully added, {@code false} otherwise.
+	 * @throws DAOException If there is an issue with the DAO operations.
+	 * @throws SQLException If a database access error occurs.
+	 */
+	
 	public static boolean addImageUrl(Plant plant) throws DAOException, SQLException {
 
 		try (Connection connection = ConnectionUtil.getConnection()) {
 			// Create update statement using task id
+			
+			 // Retrieve the plant ID based on the plant name
 			int id = getPlantIdByName(plant.getPlantName());
 			Logger.info(id + "iujy");
 
@@ -136,6 +185,19 @@ public class PlantDAO {
 		return true;
 	}
 
+	
+	
+	/**
+	 * Retrieves the image URLs associated with a plant from the database.
+	 *
+	 * @param plantId The ID of the plant for which image URLs need to be retrieved.
+	 * @return A List of image URLs associated with the specified plant ID.
+	 * @throws DAOException If there is an issue with the DAO operations.
+	 * @throws SQLException If a database access error occurs.
+	 * 
+	 */
+	
+	
 	public static List<String> getPlantImageUrls(int plantId) throws DAOException, SQLException {
 		try (Connection connection = ConnectionUtil.getConnection()) {
 			List<String> urlList = new ArrayList<>();
@@ -157,10 +219,21 @@ public class PlantDAO {
 		}
 	}
 
+	
+	/**
+	 * Updates the information of a plant in the database with the new information provided.
+	 *
+	 * @param plant The Plant object containing the updated information for the plant.
+	 * @throws DAOException If there is an issue with the DAO operations.
+	 * @throws SQLException If a database access error occurs.
+	 */
+	
+	
 	public static void updatePlant(Plant plant) throws DAOException, SQLException {
 
 		try (Connection connection = ConnectionUtil.getConnection()) {
 			// Create update statement using task id
+			 // SQL query to update the plant information based on the plant ID
 			String updatequery = "UPDATE plant SET plantName = ?, price = ?, plantType = ?, plantHeight = ?, plantingSeason = ?, hybrid = ? WHERE plant_id = ?";
 
 			try (PreparedStatement pst = connection.prepareStatement(updatequery)) {
@@ -179,28 +252,54 @@ public class PlantDAO {
 		}
 	}
 
+	
+	/**
+	 * Deletes a plant from the database based on the provided plant ID.
+	 *
+	 * @param plantIds The ID of the plant to be deleted.
+	 * @return {@code true} if the plant was successfully deleted, {@code false} otherwise.
+	 * @throws DAOException If there is an issue with the DAO operations or if the plant ID is invalid.
+	 * @throws SQLException If a database access error occurs.
+	 * @throws NullPointerException If the provided plant ID is null.
+	 */
+	
+	
 	public static boolean deletePlantById(int plantIds) throws DAOException, SQLException, NullPointerException {
-		if (plantIds <= 0) {
-			throw new DAOException("id cannot be zero or negative");
-		}
+	
+		// Check if the provided plant ID is valid
+	    if (plantIds <= 0) {
+	        throw new DAOException("id cannot be zero or negative");
+	    }
 
-		try (Connection connection = ConnectionUtil.getConnection();) {
-			String query = "{call DeletePlants(?)}";
+	    try (Connection connection = ConnectionUtil.getConnection();) {
+	        // SQL query to call a stored procedure to delete plants by ID
+	        String query = "{call DeletePlants(?)}";
 
-			try (CallableStatement cStatement = connection.prepareCall(query)) {
+	        try (CallableStatement cStatement = connection.prepareCall(query)) {
+	            // Set the plant ID parameter for the callable statement
+	            cStatement.setInt(1, plantIds);
 
-				cStatement.setInt(1, plantIds);
-
-				cStatement.execute();
-				Logger.info("deleted");
-				return true;
-			}
-		} catch (SQLException e) {
-			throw new DAOException("Error deleting plant", e);
-		}
+	            // Execute the callable statement to delete the plant
+	            cStatement.execute();
+	            Logger.info("deleted");
+	            return true;
+	        }
+	    } catch (SQLException e) {
+	        throw new DAOException("Error deleting plant", e);
+	    }
 	}
+		
 
-	//////
+	/**
+	 * Retrieves a plant's information from the database based on the provided plant ID.
+	 *
+	 * @param id The ID of the plant for which information needs to be retrieved.
+	 * @return A Plant object containing the information of the specified plant.
+	 * @throws DAOException If there is an issue with the DAO operations.
+	 * @throws SQLException If a database access error occurs.
+	 */
+	
+	
 	public static Plant getPlantById(int id) throws DAOException, SQLException {
 
 		try (Connection connection = ConnectionUtil.getConnection()) {
@@ -223,7 +322,6 @@ public class PlantDAO {
 					plant.setPlantingSeason(rs.getString("plantingSeason"));
 					plant.setPlantType(PlantTypeEnum.valueOf(rs.getString("plantType").toUpperCase()));
 					plant.setPlantHeight(rs.getFloat("plantHeight"));
-//					plant.setRating(rs.getInt("rating"));
 					plant.setHybrid(HybridEnum.valueOf(rs.getString("hybrid").toUpperCase()));
 				}
 
@@ -234,37 +332,40 @@ public class PlantDAO {
 		}
 	}
 
-	/////////////
+	
+	
+	/**
+	 * Retrieves a list of all plants stored in the database.
+	 *
+	 * @return A List containing Plant objects representing all plants in the database.
+	 * @throws DAOException If there is an issue with the DAO operations.
+	 * @throws SQLException If a database access error occurs.
+	 */
 	public static List<Plant> getAllPlant() throws DAOException, SQLException {
+	    // Create a List to store the retrieved plant objects
+	    List<Plant> plantProductList = new ArrayList<>();
 
-		// Created a List Object
-		List<Plant> plantProductList = new ArrayList<>();
+	    try (Connection connection = ConnectionUtil.getConnection()) {
+	        // SQL query to retrieve all plant records from the 'plant' table
+	        final String query = "SELECT * FROM plant";
 
-		try (Connection connection = ConnectionUtil.getConnection()) {
+	        try (Statement st = connection.createStatement()) {
 
-			final String query = "select * from plant";
+	            try (ResultSet rs = st.executeQuery(query)) {
+	                // Iterate through the result set and create Plant objects
+	                while (rs.next()) {
+	                    Plant plant = createPlantFromResultSet(rs);
+	                    plantProductList.add(plant);
+	                }
+	            }
 
-			try (Statement st = connection.createStatement()) {
+	        } catch (SQLException e) {
+	            throw new DAOException("Error for retrieving all plants", e);
+	        }
 
-				try (ResultSet rs = st.executeQuery(query)) {
-
-					while (rs.next()) {
-
-						Plant plant = createPlantFromResultSet(rs);
-						plantProductList.add(plant);
-
-					}
-
-				}
-
-			} catch (SQLException e) {
-				throw new DAOException("Error for Get all product by store Method is Failed", e);
-			}
-
-			// Returning a product list (ArrayList).
-			return plantProductList;
-
-		}
+	        // Return the list of retrieved plant objects
+	        return plantProductList;
+	    }
 	}
 
 	public static Plant createPlantFromResultSet(ResultSet rs) throws SQLException, DAOException {

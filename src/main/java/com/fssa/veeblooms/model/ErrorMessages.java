@@ -4,6 +4,7 @@ package com.fssa.veeblooms.model;
 public interface ErrorMessages {
 	public static final String INVALID_PLANT_NULL= "Plant object can't be null";
 	public static final String INVALID_PLANT_NAME= "Plant name can't be null ";
+	public static final String PLANT_NOT_EXISTS= "Plant doesn't exists";
 	public static final String INVALID_PLANT_NAME_LENGTH= "The length of the plant name should be minimum of 2 characters";
 	public static final String INVALID_PLANT_NAME_PATTERN="Plant name shouldn't contain any numbers";
 	public static final String INVALID_PLANT_PLANTIMAGESURL= "Plant image url can't be null";
