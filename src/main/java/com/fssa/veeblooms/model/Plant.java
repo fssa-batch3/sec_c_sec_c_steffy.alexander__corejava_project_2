@@ -48,14 +48,6 @@ public class Plant {
 		this.price = price;
 	}
 
-//	public int getRating() {
-//		return rating;
-//	}
-//
-//	public void setRating(int rating) {
-//		this.rating = rating;
-//	}
-
 	public PlantTypeEnum getPlantType() {
 		return plantType;
 	}
@@ -105,9 +97,7 @@ public class Plant {
 		this.plantName = plantName;
 	}
 	
-	
 
-	@Override
 	public String toString() {
 		return "Plant [plantId=" + plantId + ", plantName=" + plantName + ", plantImagesUrl=" + plantImagesUrl
 				+ ", price=" + price + ", plantType=" + plantType + ", plantHeight="

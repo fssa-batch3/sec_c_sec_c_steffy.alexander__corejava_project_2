@@ -28,6 +28,11 @@ public class PlantService {
 		PlantService.setPlantValidator(plantValidator);
 		PlantService.setPlantDAO(plantDAO);
 	}
+	
+	
+	public PlantService() {
+		
+	}
 
 	// Method to add a plant
 	

@@ -323,6 +323,7 @@ public class PlantDAO {
 					plant.setPlantType(PlantTypeEnum.valueOf(rs.getString("plantType").toUpperCase()));
 					plant.setPlantHeight(rs.getFloat("plantHeight"));
 					plant.setHybrid(HybridEnum.valueOf(rs.getString("hybrid").toUpperCase()));
+					plant.setPlantImagesUrl(getPlantImagesById(id));
 				}
 
 				return plant;
@@ -332,7 +333,37 @@ public class PlantDAO {
 		}
 	}
 
-	
+	public static ArrayList<String> getPlantImagesById(int id) throws DAOException, SQLException {
+
+		try (Connection connection = ConnectionUtil.getConnection()) {
+			// Create update statement using task id
+
+			String query = "SELECT * FROM plantimagesurl WHERE plant_id = ? ";
+
+			ArrayList<String> plantImages= new ArrayList<String>();
+		
+			
+			try (PreparedStatement pst = connection.prepareStatement(query)) {
+
+				pst.setInt(1, id);
+
+				ResultSet rs = pst.executeQuery();
+
+				Plant plant = new Plant();
+
+				
+				while (rs.next()) {
+            plantImages.add(rs.getString("image_url"));
+					
+				}
+
+				return plantImages;
+			}
+		} catch (SQLException e) {
+			throw new DAOException(ErrorMessages.ERROR_GETTING_PLANTID, e);
+		}
+	}
+
 	
 	/**
 	 * Retrieves a list of all plants stored in the database.
@@ -368,6 +399,7 @@ public class PlantDAO {
 	    }
 	}
 
+
 	public static Plant createPlantFromResultSet(ResultSet rs) throws SQLException, DAOException {
 
 		Plant plant = new Plant();
@@ -376,7 +408,6 @@ public class PlantDAO {
 		plant.setPlantName(rs.getString("plantName"));
 		plant.setPlantImagesUrl(getPlantImageUrls(plantId));
 		plant.setPrice(rs.getDouble("price"));
-//		plant.setRating(rs.getInt("rating"));
 		plant.setPlantType(PlantTypeEnum.valueOf(rs.getString("plantType").toUpperCase()));
 		plant.setPlantHeight(rs.getFloat("plantHeight"));
 		plant.setPlantingSeason(rs.getString("plantingSeason"));
@@ -388,3 +419,4 @@ public class PlantDAO {
 	}
 
 }
+
