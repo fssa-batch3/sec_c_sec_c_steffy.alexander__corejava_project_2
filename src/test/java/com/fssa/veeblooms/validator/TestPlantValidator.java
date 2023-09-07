@@ -6,8 +6,8 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
-import com.fssa.veeblooms.Enum.HybridEnum;
-import com.fssa.veeblooms.Enum.PlantTypeEnum;
+import com.fssa.veeblooms.enumclass.HybridEnum;
+import com.fssa.veeblooms.enumclass.PlantTypeEnum;
 import com.fssa.veeblooms.exception.CustomException;
 import com.fssa.veeblooms.model.ErrorMessages;
 import com.fssa.veeblooms.model.Plant;

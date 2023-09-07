@@ -1,4 +1,4 @@
-package com.fssa.veeblooms.Enum;
+package com.fssa.veeblooms.enumclass;
 
 public enum PlantTypeEnum {
 	   FLOWER,

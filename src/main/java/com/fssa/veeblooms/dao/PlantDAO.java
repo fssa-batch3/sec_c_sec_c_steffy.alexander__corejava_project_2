@@ -9,8 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fssa.veeblooms.Enum.HybridEnum;
-import com.fssa.veeblooms.Enum.PlantTypeEnum;
+import com.fssa.veeblooms.enumclass.HybridEnum;
+import com.fssa.veeblooms.enumclass.PlantTypeEnum;
 import com.fssa.veeblooms.exception.DAOException;
 import com.fssa.veeblooms.model.ErrorMessages;
 import com.fssa.veeblooms.model.Plant;

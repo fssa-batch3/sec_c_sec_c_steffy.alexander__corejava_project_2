@@ -2,8 +2,8 @@ package com.fssa.veeblooms.model;
 
 import java.util.List;
 
-import com.fssa.veeblooms.Enum.HybridEnum;
-import com.fssa.veeblooms.Enum.PlantTypeEnum;
+import com.fssa.veeblooms.enumclass.HybridEnum;
+import com.fssa.veeblooms.enumclass.PlantTypeEnum;
 
 
 public class Plant {

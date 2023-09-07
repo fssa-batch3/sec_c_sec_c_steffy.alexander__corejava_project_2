@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.fssa.veeblooms.enumclass.HybridEnum;
+import com.fssa.veeblooms.enumclass.PlantTypeEnum;
 import com.fssa.veeblooms.exception.*;
 import com.fssa.veeblooms.model.*;
-import com.fssa.veeblooms.Enum.HybridEnum;
-import com.fssa.veeblooms.Enum.PlantTypeEnum;
 
 public class PlantValidator {
 
