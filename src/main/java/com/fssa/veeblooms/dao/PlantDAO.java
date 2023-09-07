@@ -271,7 +271,7 @@ public class PlantDAO {
 	        throw new DAOException("id cannot be zero or negative");
 	    }
 
-	    try (Connection connection = ConnectionUtil.getConnection();) {
+	    try (Connection connection = ConnectionUtil.getConnection()) {
 	        // SQL query to call a stored procedure to delete plants by ID
 	        String query = "{call DeletePlants(?)}";
 

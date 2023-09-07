@@ -30,9 +30,8 @@ select * from plantimagesurl;
 DELIMITER && 
 CREATE PROCEDURE DeletePlants(IN plant_ids INT)
 BEGIN
-    -- Delete the record from the Ground table
     
-    -- Delete existing GroundImages and SportsAvailable records for the given groundId
+  
     DELETE FROM plantimagesurl WHERE plant_id = plant_ids;
     DELETE FROM plant WHERE plant_id = plant_ids;
     

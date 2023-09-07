@@ -39,7 +39,7 @@ public class TestPlantService {
  
 		// Create a Plant object
 		Plant plant = new Plant();
-		plant.setPlantName("Dieffenbranchia");
+		plant.setPlantName("pinkrose");
 		plant.setPlantImagesUrl(images);
 		plant.setPrice(210);
 		plant.setPlantType(PlantTypeEnum.PLANT);
@@ -85,7 +85,7 @@ public class TestPlantService {
 
 		// Create a Plant object for updating
 		Plant plant = new Plant();
-		plant.setPlantName("Dieffenbranchia");
+		plant.setPlantName("pinkrose");
 		plant.setPlantImagesUrl(images);
 		plant.setPrice(220);
 		plant.setPlantType(PlantTypeEnum.PLANT);
@@ -119,7 +119,7 @@ public class TestPlantService {
 	public void testDeletePlant() throws CustomException, SQLException, NullPointerException, DAOException {
 	
 		Plant plant = new Plant();
-		plant.setPlantName("Dieffenbranchia");
+		plant.setPlantName("pinkrose");
 		
 		if(PlantDAO.checkplantName(plant.getPlantName())) {
 			Assertions.assertTrue(PlantDAO.deletePlantById(PlantDAO.getPlantIdByName(plant.getPlantName())));

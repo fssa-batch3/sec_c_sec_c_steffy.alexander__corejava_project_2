@@ -51,7 +51,7 @@ public class PlantService {
 		}
 		return true;
 	}
-
+ 
 	// Method to delete a plant
 	
 	public static boolean deletePlant(int id) throws DAOException, SQLException {
@@ -71,7 +71,7 @@ public class PlantService {
 		PlantService.plantDAO = plantDAO;
 	}
 
-	// Method to get image URLs of a plant
+	// Method to get image URLs of a plant 
 	
 	public static List<String> getPlantImageUrls(int plantid) throws DAOException, SQLException {
 		return PlantDAO.getPlantImageUrls(plantid);
