@@ -12,13 +12,13 @@ public class ConnectionUtil {
 	public static Connection getConnection() throws DAOException {
 
 		Connection con = null;
-		String url = System.getenv("DATABASE_HOST");
-		String userName = System.getenv("DATABASE_USERNAME");
-		String passWord = System.getenv("DATABASE_PASSWORD");
+//		String url = System.getenv("DATABASE_HOST");
+//		String userName = System.getenv("DATABASE_USERNAME");
+//		String passWord = System.getenv("DATABASE_PASSWORD");
 
-//		    String url = "jdbc:mysql://localhost:3306/veeblooms";
-//	        String userName = "root";
-//	        String passWord = "123456";
+		    String url = "jdbc:mysql://localhost:3306/veeblooms";
+	        String userName = "root";
+	        String passWord = "123456";
 
 		try {
 			
@@ -49,15 +49,5 @@ public class ConnectionUtil {
 //		
 	}
 
-	public static void main(String[] args) {
-		
-		try {
-			getConnection();
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
 
 }

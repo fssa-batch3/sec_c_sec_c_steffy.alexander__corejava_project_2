@@ -74,7 +74,7 @@ public class PlantService {
 	// Method to get image URLs of a plant 
 	
 	public static List<String> getPlantImageUrls(int plantid) throws DAOException, SQLException {
-		return PlantDAO.getPlantImageUrls(plantid);
+		return PlantDAO.getPlantImageUrls(plantid); 
 	}
 
 	// Method to get a list of all plants

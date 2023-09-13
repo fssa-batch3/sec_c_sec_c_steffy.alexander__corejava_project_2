@@ -39,10 +39,10 @@ public class TestPlantService {
  
 		// Create a Plant object
 		Plant plant = new Plant();
-		plant.setPlantName("pinkrose");
+		plant.setPlantName("Dieffenbachia");
 		plant.setPlantImagesUrl(images);
 		plant.setPrice(210);
-		plant.setPlantType(PlantTypeEnum.PLANT);
+		plant.setPlantType(PlantTypeEnum.PLANT); 
 		plant.setPlantHeight(3.4f);
 		plant.setPlantingSeason("Early Spring");
 		plant.setHybrid(HybridEnum.NO);
@@ -65,7 +65,7 @@ public class TestPlantService {
 		} catch (CustomException | SQLException e) {
 			
 			Assertions.assertEquals(ErrorMessages.INVALID_PLANT_NAME, e.getMessage());
-		}
+		} 
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class TestPlantService {
 
 		// Create a Plant object for updating
 		Plant plant = new Plant();
-		plant.setPlantName("pinkrose");
+		plant.setPlantName("Dieffenbachia");
 		plant.setPlantImagesUrl(images);
 		plant.setPrice(220);
 		plant.setPlantType(PlantTypeEnum.PLANT);
@@ -105,7 +105,7 @@ public class TestPlantService {
 	public void testInvalidUpdatePlant() throws DAOException {
 		// Create an empty Plant object for updating
 		Plant plant = new Plant();
-		try {
+		try { 
 			
 			Assertions.assertTrue(PlantService.updatePlant(plant));
 		} catch (CustomException | SQLException e) {
@@ -119,7 +119,7 @@ public class TestPlantService {
 	public void testDeletePlant() throws CustomException, SQLException, NullPointerException, DAOException {
 	
 		Plant plant = new Plant();
-		plant.setPlantName("pinkrose");
+		plant.setPlantName("Miniorange plant");
 		
 		if(PlantDAO.checkplantName(plant.getPlantName())) {
 			Assertions.assertTrue(PlantDAO.deletePlantById(PlantDAO.getPlantIdByName(plant.getPlantName())));
@@ -127,7 +127,7 @@ public class TestPlantService {
 		else {
 			Assertions.fail(ErrorMessages.PLANT_NOT_EXISTS);
 		}
-	
+	 
 	}
  
 

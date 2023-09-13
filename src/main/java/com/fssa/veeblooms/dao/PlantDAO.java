@@ -110,7 +110,7 @@ public class PlantDAO {
 	// This method is used for getting id from the database by using plant name
 	
 	/**
-	 * Retrieves the plant ID associated with the given plant name from the database.
+	 * Retrieves the plant ID associated with the given plant name from the da tabase.
 	 *
 	 * @param plantName The name of the plant for which the ID needs to be retrieved.
 	 * @return The plant ID associated with the specified name.
@@ -383,7 +383,7 @@ public class PlantDAO {
 	        try (Statement st = connection.createStatement()) {
 
 	            try (ResultSet rs = st.executeQuery(query)) {
-	                // Iterate through the result set and create Plant objects
+	                // Iterate through the result set and create Plant object s
 	                while (rs.next()) {
 	                    Plant plant = createPlantFromResultSet(rs);
 	                    plantProductList.add(plant);
