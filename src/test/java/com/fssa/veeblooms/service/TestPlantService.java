@@ -37,7 +37,7 @@ public class TestPlantService {
 		images.add("https://iili.io/HNOqRgn.jpg");
 		images.add("https://iili.io/HNOoMjj.jpg");
  
-		// Create a Plant object
+		// Create a Plant     
 		Plant plant = new Plant();
 		plant.setPlantName("Dieffenbachia");
 		plant.setPlantImagesUrl(images);
