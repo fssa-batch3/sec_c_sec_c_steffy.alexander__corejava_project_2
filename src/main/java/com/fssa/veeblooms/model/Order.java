@@ -14,6 +14,7 @@ public class Order {
 	private LocalDate orderedDate;
 	private OrderStatus status;
 	private String comments;
+	private String address;
 
 	public int getUserID() {
 		return userID;
@@ -35,8 +36,8 @@ public class Order {
 		return totalAmount;
 	}
 
-	public void setTotalAmount(double total_amount) {
-		this.totalAmount = total_amount;
+	public void setTotalAmount(double totalAmount) {
+		this.totalAmount = totalAmount;
 	}
 
 	public List<OrderedProduct> getProductsList() {
@@ -51,8 +52,8 @@ public class Order {
 		return orderedDate;
 	}
 
-	public void setOrderedDate(LocalDate ordered_date) {
-		this.orderedDate = ordered_date;
+	public void setOrderedDate(LocalDate orderedDate) {
+		this.orderedDate = orderedDate;
 	}
 
 	public OrderStatus getStatus() {
@@ -71,9 +72,20 @@ public class Order {
 		this.comments = comments;
 	}
 
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 	@Override
 	public String toString() {
-		return "Order [user_id=" + userID + ", total_amount=" + totalAmount + ", productsList=" + productsList
-				+ ", ordered_date=" + orderedDate + ", status=" + status + ", comments=" + comments + "]";
+		return "Order [userID=" + userID + ", OrderId=" + OrderId + ", totalAmount=" + totalAmount + ", productsList="
+				+ productsList + ", orderedDate=" + orderedDate + ", status=" + status + ", comments=" + comments
+				+ ", address=" + address + "]";
 	}
+
+	
 }

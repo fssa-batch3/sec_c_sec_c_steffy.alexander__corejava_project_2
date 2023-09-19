@@ -1,18 +1,12 @@
 package com.fssa.veeblooms.model;
 
 public class OrderedProduct {
-    private Plant product;
+    private int productId;
     private double productPrice;
     private int quantity;
     private double totalAmount;
 
-    public Plant getProduct() {
-        return product;
-    }
-
-    public void setProduct(Plant product) {
-        this.product = product;
-    }
+   
 
     public double getProductPrice() {
         return productPrice;
@@ -38,9 +32,19 @@ public class OrderedProduct {
         this.totalAmount = totalAmount;
     }
 
-    @Override
-    public String toString() {
-        return "OrderedProduct [product=" + product + ", productPrice=" + productPrice + ", quantity=" + quantity
-                + ", totalAmount=" + totalAmount + "]";
-    }
+	public int getProductId() {
+		return productId;
+	}
+
+	public void setProductId(int productId) {
+		this.productId = productId;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderedProduct [productId=" + productId + ", productPrice=" + productPrice + ", quantity=" + quantity
+				+ ", totalAmount=" + totalAmount + "]";
+	}
+
+  
 }

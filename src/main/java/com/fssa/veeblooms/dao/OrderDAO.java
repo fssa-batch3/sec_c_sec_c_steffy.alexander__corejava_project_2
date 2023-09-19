@@ -4,13 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.Statement;
+import java.util.List;
+
 import com.fssa.veeblooms.enumclass.OrderStatus;
 import com.fssa.veeblooms.exception.DAOException;
 import com.fssa.veeblooms.model.ErrorMessages;
 import com.fssa.veeblooms.model.Order;
 import com.fssa.veeblooms.model.OrderedProduct;
-import com.fssa.veeblooms.model.Plant;
 import com.fssa.veeblooms.util.ConnectionUtil;
 import com.fssa.veeblooms.util.Logger;
 
@@ -20,21 +21,34 @@ public class OrderDAO {
 
 		try (Connection connection = ConnectionUtil.getConnection()) {
 			// SQL query to insert the order information into the 'orders' table
-			String insertQuery = "INSERT INTO order (total_amount, ordered_date, status, comments,user_id) VALUES (?, ?, ?, ?,?)";
+			String insertQuery = "INSERT INTO `order` (ordered_date, user_id, total_amount, status) VALUES (?, ?, ?, ?)";
+
+
 
 			// Execute insert statement
-			try (PreparedStatement pst = connection.prepareStatement(insertQuery)) {
+			try (PreparedStatement pst = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
 
-				pst.setDouble(1, order.getTotalAmount());
-				pst.setDate(2, java.sql.Date.valueOf(order.getOrderedDate()));
-				pst.setString(3, order.getStatus().toString());
-				pst.setString(4, order.getComments());
-				pst.setInt(5, order.getUserID());
+				pst.setString(4, order.getStatus().toString());
+				pst.setInt(2, order.getUserID());
+				pst.setDouble(3, order.getTotalAmount());
+				pst.setString(1, order.getOrderedDate() + "");
 
-				// Execute the insert statement and get the number of affected rows
-				int rowsAffected = pst.executeUpdate();
+				int affectedRows = pst.executeUpdate();
+				int orderId;
+				if (affectedRows == 0) {
+					throw new SQLException("Adding order failed, no rows affected.");
+				}
 
-				Logger.info("row/rows affected: " + rowsAffected);
+				try (ResultSet generatedKeys = pst.getGeneratedKeys()) {
+					if (generatedKeys.next()) {
+						orderId = generatedKeys.getInt(1);
+						System.out.println("orderId : "+orderId);
+					} else {
+						throw new SQLException("Creating user failed, no ID obtained.");
+					}
+				}
+				addOrderItems(order.getProductsList(), orderId);
+				Logger.info("row/rows affected: " + affectedRows);
 
 			}
 		} catch (SQLException e) {
@@ -43,7 +57,8 @@ public class OrderDAO {
 		}
 	}
 
-	public static void addOrderItems(ArrayList<OrderedProduct> orderedProducts) throws DAOException, SQLException {
+	public static void addOrderItems(List<OrderedProduct> orderedProducts, int orderId)
+			throws DAOException, SQLException {
 
 		try (Connection connection = ConnectionUtil.getConnection()) {
 			// SQL query to insert the order information into the 'orders' table
@@ -53,18 +68,18 @@ public class OrderDAO {
 			try (PreparedStatement pst = connection.prepareStatement(insertQuery)) {
 
 				for (OrderedProduct orderedProduct : orderedProducts) {
-					Plant plant = orderedProduct.getProduct();
-//					pst.setInt(1, order.getTotalAmount()); 
-					pst.setInt(2, PlantDAO.getPlantIdByName(plant.getPlantName()));
-					pst.setDouble(3, plant.getPrice());
+
+					pst.setInt(1, orderId);
+					pst.setInt(2, orderedProduct.getProductId());
+					pst.setDouble(3, orderedProduct.getProductPrice());
 					pst.setInt(4, 1);
-					pst.setDouble(5, plant.getPrice());
+					pst.setDouble(5, orderedProduct.getTotalAmount());
 					pst.setString(6, OrderStatus.ORDERED + "");
 
 					// Execute the insert statement and get the number of affected rows
 					int rowsAffected = pst.executeUpdate();
 				}
-
+				Logger.info("Odered products addded to the ordered_products table successfully");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -14,7 +14,10 @@ public class OrderService {
 		if (OrderValidator.validateOrder(order)) {
 
 			OrderDAO.addOrder(order);
-		} 
-		return true;
+			return true;
+		}
+		return false; 
+		
 	}
 }
+

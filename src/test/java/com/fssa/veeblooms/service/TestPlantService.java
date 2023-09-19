@@ -152,7 +152,7 @@ public class TestPlantService {
 	}
 
 	/**
-	 * Test case to validate fetching all plant records using PlantService.
+	 * Test case to validate fetching all plant recorokds using PlantService.
 	 * @throws DAOException If there's a DAO-related exception during the test.
 	 * @throws SQLException If there's a SQL-related exception during the test.
 	 */

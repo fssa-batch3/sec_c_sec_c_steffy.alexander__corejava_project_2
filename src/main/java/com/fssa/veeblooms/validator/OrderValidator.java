@@ -72,4 +72,14 @@ public class OrderValidator {
 		return true;
 
 	}
+
+	public static boolean validateAddress(String address) throws CustomException {
+
+		if (address != null && !address.isEmpty() && address.length() > 5) {
+			throw new CustomException(ErrorMessages.INVALID_COMMENTSTATEMENT);
+		}
+
+		return true;
+
+	}
 }
