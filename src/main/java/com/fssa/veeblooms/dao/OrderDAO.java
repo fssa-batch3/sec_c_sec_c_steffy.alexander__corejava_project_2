@@ -21,17 +21,19 @@ public class OrderDAO {
 
 		try (Connection connection = ConnectionUtil.getConnection()) {
 			// SQL query to insert the order information into the 'orders' table
-			String insertQuery = "INSERT INTO `order` (ordered_date, user_id, total_amount, status) VALUES (?, ?, ?, ?)";
+			String insertQuery = "INSERT INTO `order` (ordered_date, user_id, total_amount, status,address,phone_num) VALUES (?, ?, ?, ?,?,?)";
 
 
 
 			// Execute insert statement
 			try (PreparedStatement pst = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
-
-				pst.setString(4, order.getStatus().toString());
+				
+				pst.setString(1, order.getOrderedDate() + "");
 				pst.setInt(2, order.getUserID());
 				pst.setDouble(3, order.getTotalAmount());
-				pst.setString(1, order.getOrderedDate() + "");
+				pst.setString(4, order.getStatus().toString());
+				pst.setString(5,order.getAddress());
+				pst.setString(6, order.getPhoneNumber());
 
 				int affectedRows = pst.executeUpdate();
 				int orderId;
@@ -117,6 +119,8 @@ public class OrderDAO {
 						order.setOrderedDate(resultSet.getDate("ordered_date").toLocalDate());
 						order.setStatus(OrderStatus.valueOf(resultSet.getString("status")));
 						order.setComments(resultSet.getString("comments"));
+						order.setAddress(resultSet.getString("address"));
+						order.setPhoneNumber(resultSet.getString("phone_num"));
 
 						return order;
 					}

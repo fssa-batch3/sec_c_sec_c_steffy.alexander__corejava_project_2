@@ -21,7 +21,7 @@ public class TestOrderService {
 	@Test
 	public void testAddOrder() throws CustomException, SQLException, DAOException {
 
-		
+	
 		Order order = new Order();
 		List<OrderedProduct> productsList = new ArrayList<>();
 		int plantId= 21;
@@ -39,8 +39,12 @@ public class TestOrderService {
 		order.setOrderedDate(LocalDate.now());
 		order.setUserID(2);
 		order.setStatus(OrderStatus.ORDERED);
+		order.setAddress("sankarnagar street");
+		order.setPhoneNumber("98765432210");
+		
 		System.out.println(order);
 		Assertions.assertTrue(OrderService.addOrder(order));
 	}
 
 }
+

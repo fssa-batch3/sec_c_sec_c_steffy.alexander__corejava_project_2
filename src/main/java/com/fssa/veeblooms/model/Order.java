@@ -16,6 +16,11 @@ public class Order {
 	private String comments;
 	private String address;
 
+
+	private String phoneNumber;
+
+
+
 	public int getUserID() {
 		return userID;
 	}
@@ -79,12 +84,23 @@ public class Order {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
 
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 	@Override
 	public String toString() {
 		return "Order [userID=" + userID + ", OrderId=" + OrderId + ", totalAmount=" + totalAmount + ", productsList="
 				+ productsList + ", orderedDate=" + orderedDate + ", status=" + status + ", comments=" + comments
-				+ ", address=" + address + "]";
+				+ ", address=" + address + ", phoneNumber=" + phoneNumber + ", getUserID()=" + getUserID()
+				+ ", getOrderId()=" + getOrderId() + ", getTotalAmount()=" + getTotalAmount() + ", getProductsList()="
+				+ getProductsList() + ", getOrderedDate()=" + getOrderedDate() + ", getStatus()=" + getStatus()
+				+ ", getComments()=" + getComments() + ", getAddress()=" + getAddress() + ", getPhoneNumber()="
+				+ getPhoneNumber() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
 	}
 
 	
