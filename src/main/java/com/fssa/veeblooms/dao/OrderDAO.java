@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fssa.veeblooms.enumclass.OrderStatus;
@@ -23,16 +24,14 @@ public class OrderDAO {
 			// SQL query to insert the order information into the 'orders' table
 			String insertQuery = "INSERT INTO `order` (ordered_date, user_id, total_amount, status,address,phone_num) VALUES (?, ?, ?, ?,?,?)";
 
-
-
 			// Execute insert statement
 			try (PreparedStatement pst = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
-				
+
 				pst.setString(1, order.getOrderedDate() + "");
 				pst.setInt(2, order.getUserID());
 				pst.setDouble(3, order.getTotalAmount());
 				pst.setString(4, order.getStatus().toString());
-				pst.setString(5,order.getAddress());
+				pst.setString(5, order.getAddress());
 				pst.setString(6, order.getPhoneNumber());
 
 				int affectedRows = pst.executeUpdate();
@@ -44,7 +43,7 @@ public class OrderDAO {
 				try (ResultSet generatedKeys = pst.getGeneratedKeys()) {
 					if (generatedKeys.next()) {
 						orderId = generatedKeys.getInt(1);
-						System.out.println("orderId : "+orderId);
+						System.out.println("orderId : " + orderId);
 					} else {
 						throw new SQLException("Creating user failed, no ID obtained.");
 					}
@@ -91,7 +90,7 @@ public class OrderDAO {
 
 	private static boolean checkOrderExists(int orderId) throws DAOException, SQLException {
 		try (Connection connection = ConnectionUtil.getConnection()) {
-			String query = "SELECT COUNT(*) FROM orders WHERE order_id = ?";
+			String query = "SELECT COUNT(*) FROM `order` WHERE order_id = ?";
 			try (PreparedStatement pst = connection.prepareStatement(query)) {
 				pst.setInt(1, orderId);
 				try (ResultSet resultSet = pst.executeQuery()) {
@@ -105,14 +104,17 @@ public class OrderDAO {
 		return false;
 	}
 
-	public Order getOrderById(int orderId) throws DAOException {
-		try (Connection connection = ConnectionUtil.getConnection()) {
-			String query = "SELECT * FROM order WHERE order_id = ?";
-			try (PreparedStatement pst = connection.prepareStatement(query)) {
-				pst.setInt(1, orderId);
 
+	public ArrayList<Order> getOrderById(int userId) throws DAOException {
+		try (Connection connection = ConnectionUtil.getConnection()) {
+			String query = "SELECT * FROM `order` WHERE user_id = ?";
+			try (PreparedStatement pst = connection.prepareStatement(query)) {
+				pst.setInt(1, userId);
+
+				
 				try (ResultSet resultSet = pst.executeQuery()) {
-					if (resultSet.next()) {
+					ArrayList<Order> orders = new ArrayList<Order>();
+					while(resultSet.next()) {
 						Order order = new Order();
 						order.setOrderId(resultSet.getInt("order_id"));
 						order.setTotalAmount(resultSet.getDouble("total_amount"));
@@ -121,17 +123,45 @@ public class OrderDAO {
 						order.setComments(resultSet.getString("comments"));
 						order.setAddress(resultSet.getString("address"));
 						order.setPhoneNumber(resultSet.getString("phone_num"));
-
-						return order;
+						order.setProductsList(getOrderedProductsByOrderId(resultSet.getInt("order_id")));
+						orders.add(order);
+					
 					}
+					return orders;
 				}
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DAOException(ErrorMessages.ORDER_RETRIEVAL_FAILED);
 		}
-		return null;
+		
+	}
+
+	public ArrayList<OrderedProduct> getOrderedProductsByOrderId(int orderId) throws DAOException {
+		try (Connection connection = ConnectionUtil.getConnection()) {
+			String query = "SELECT * FROM order_items WHERE order_id = ?";
+			try (PreparedStatement pst = connection.prepareStatement(query)) {
+				pst.setInt(1, orderId);
+				ArrayList<OrderedProduct> orderProducts = new ArrayList<OrderedProduct>();
+
+				try (ResultSet resultSet = pst.executeQuery()) {
+					while (resultSet.next()) {
+						OrderedProduct orderProduct = new OrderedProduct();
+						orderProduct.setProductId(resultSet.getInt("product_id"));
+						orderProduct.setProductPrice(resultSet.getDouble("price"));
+						orderProduct.setTotalAmount(resultSet.getDouble("total_amount"));
+						orderProduct.setQuantity(resultSet.getInt("quantity"));
+						orderProducts.add(orderProduct);
+					}
+					return orderProducts;
+				}
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(ErrorMessages.ORDER_RETRIEVAL_FAILED);
+		}
+
 	}
 
 }

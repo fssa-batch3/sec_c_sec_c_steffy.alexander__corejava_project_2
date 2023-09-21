@@ -135,7 +135,6 @@ public class UserDAO {
 				psmt.setString(1, user.getFirstName());
 				psmt.setString(2, user.getLastName());
 				psmt.setString(3, user.getEmail());
-
 				psmt.setString(4, user.getMobileNumber());
 				psmt.setString(5, user.getAddress());
 				psmt.setString(6, user.getGender().toString());
