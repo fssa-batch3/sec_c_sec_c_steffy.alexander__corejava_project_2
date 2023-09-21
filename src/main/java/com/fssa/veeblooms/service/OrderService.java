@@ -7,6 +7,7 @@ import com.fssa.veeblooms.dao.OrderDAO;
 import com.fssa.veeblooms.exception.CustomException;
 import com.fssa.veeblooms.exception.DAOException;
 import com.fssa.veeblooms.model.Order;
+import com.fssa.veeblooms.model.OrderedProduct;
 import com.fssa.veeblooms.validator.OrderValidator;
 
 public class OrderService {
@@ -25,7 +26,17 @@ public class OrderService {
 	public static ArrayList<Order> getOrderById(int orderId) throws DAOException, CustomException, SQLException {
 
 		OrderDAO orderDao = new OrderDAO();
-		return orderDao.getOrderById(orderId);
+		return orderDao.getOrderById(orderId); 
+
+	}
+
+	public static void deleteOrderedProductsByOrderId(int orderId) throws DAOException, CustomException, SQLException {
+		OrderDAO.deleteOrderedProductsByOrderId(orderId);
+	}
+
+	public static boolean cancelOrder(int orderId) throws DAOException, CustomException, SQLException {
+		
+	return OrderDAO.cancelOrder(orderId);
 
 	}
 }

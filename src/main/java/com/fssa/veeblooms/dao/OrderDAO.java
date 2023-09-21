@@ -104,17 +104,15 @@ public class OrderDAO {
 		return false;
 	}
 
-
 	public ArrayList<Order> getOrderById(int userId) throws DAOException {
 		try (Connection connection = ConnectionUtil.getConnection()) {
 			String query = "SELECT * FROM `order` WHERE user_id = ?";
 			try (PreparedStatement pst = connection.prepareStatement(query)) {
 				pst.setInt(1, userId);
 
-				
 				try (ResultSet resultSet = pst.executeQuery()) {
 					ArrayList<Order> orders = new ArrayList<Order>();
-					while(resultSet.next()) {
+					while (resultSet.next()) {
 						Order order = new Order();
 						order.setOrderId(resultSet.getInt("order_id"));
 						order.setTotalAmount(resultSet.getDouble("total_amount"));
@@ -125,7 +123,7 @@ public class OrderDAO {
 						order.setPhoneNumber(resultSet.getString("phone_num"));
 						order.setProductsList(getOrderedProductsByOrderId(resultSet.getInt("order_id")));
 						orders.add(order);
-					
+
 					}
 					return orders;
 				}
@@ -134,7 +132,7 @@ public class OrderDAO {
 			e.printStackTrace();
 			throw new DAOException(ErrorMessages.ORDER_RETRIEVAL_FAILED);
 		}
-		
+
 	}
 
 	public ArrayList<OrderedProduct> getOrderedProductsByOrderId(int orderId) throws DAOException {
@@ -160,6 +158,50 @@ public class OrderDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DAOException(ErrorMessages.ORDER_RETRIEVAL_FAILED);
+		}
+
+	}
+
+	public static boolean cancelOrder(int orderId) throws DAOException {
+		String updateQuery = "UPDATE `order` SET status = 'CANCELLED' WHERE order_id = ?";
+
+		try (Connection connection = ConnectionUtil.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+
+			preparedStatement.setInt(1, orderId);
+			int rowsAffected = preparedStatement.executeUpdate();
+			System.out.println("order id : " + orderId + " is cancelled successfully");
+
+			return rowsAffected > 0; // Return true if the order was canceled successfully
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+
+			return false;
+		}
+	}
+
+	public static void deleteOrderedProductsByOrderId(int orderId) throws DAOException {
+		if (orderId <= 0) {
+			throw new DAOException("Order ID cannot be zero or negative");
+		}
+
+		try (Connection connection = ConnectionUtil.getConnection()) {
+			String deleteQuery = "DELETE FROM `order` WHERE order_id = ?";
+
+			try (PreparedStatement pst = connection.prepareStatement(deleteQuery)) {
+				pst.setInt(1, orderId);
+				int rowsAffected = pst.executeUpdate();
+
+				if (rowsAffected == 0) {
+					// Handle the case where no rows were deleted (order not found)
+					throw new DAOException("Order with ID " + orderId + " not found.");
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException("Order deletion failed: " + e.getMessage());
 		}
 
 	}

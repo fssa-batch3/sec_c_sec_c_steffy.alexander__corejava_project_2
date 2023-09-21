@@ -41,5 +41,6 @@ public interface ErrorMessages {
 	public static final String ORDER_ALREADY_EXISTS = "Order with ID already exists in the database";
 	public static final String ORDER_CREATION_FAILED = "Failed to create the order in the database";
 	public static final String ORDER_RETRIEVAL_FAILED = "Failed to retrieve order data from the database";
+	public static final String ORDER_DELETION_FAILED = "Error occured in deleting order";
 
 }
