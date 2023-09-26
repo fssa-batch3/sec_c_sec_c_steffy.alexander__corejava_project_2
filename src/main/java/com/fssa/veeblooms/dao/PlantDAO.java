@@ -41,7 +41,7 @@ public class PlantDAO {
 		try (Connection connection = ConnectionUtil.getConnection()) {
 			 // SQL query to insert the plant information into the 'plant' table
 			String insertQuery = "INSERT INTO plant (plantName, price,  plantType, plantHeight, plantingSeason, hybrid) VALUES (?, ?, ?, ?, ?, ?)";
-
+ 
 			// Execute insert statement
 
 			try (PreparedStatement pst = connection.prepareStatement(insertQuery)) {

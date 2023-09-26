@@ -19,6 +19,7 @@ public class PlantValidator {
         if (plant == null) {
             throw new CustomException(ErrorMessages.INVALID_PLANT_NULL);
         }
+        
         // Validate various attributes of the plant
         validatePlantName(plant.getPlantName());
         validatePlantImagesUrl(plant.getPlantImagesUrl());
@@ -34,7 +35,7 @@ public class PlantValidator {
     
     public static boolean validatePlantName(String plantName) throws CustomException {
         // Check if the plant name is null or empty
-        if (plantName == null || plantName.trim().isEmpty()) {
+        if (plantName == null || plantName.trim().isEmpty() ) {
             throw new CustomException(ErrorMessages.INVALID_PLANT_NAME);
         }
         // Check if the plant name length is less than 3 characters
@@ -42,7 +43,7 @@ public class PlantValidator {
             throw new CustomException(ErrorMessages.INVALID_PLANT_NAME_LENGTH);
         }
         // Use regex pattern to validate plant name format
-        String regexPattern = "^[^0-9]*$";
+        String regexPattern = "[a-zA-Z]+";
         Pattern pattern = Pattern.compile(regexPattern);
         Matcher matcher = pattern.matcher(plantName);
         boolean isMatch = matcher.matches();

@@ -3,7 +3,8 @@ package com.fssa.veeblooms.enumclass;
 public enum GenderEnum {
     MALE("Male"),
     FEMALE("Female"),
-    OTHER("Other");
+    OTHER("Other"),
+    PREFER_NOT_TO_SAY("Prefer not to say");
 
     private final String value;
 

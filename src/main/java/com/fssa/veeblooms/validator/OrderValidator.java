@@ -15,10 +15,10 @@ public class OrderValidator {
 
 	// Set the properties of the order
 	public static boolean validateOrder(Order order) throws CustomException {
-		if (order == null) {
+		if (order == null) { 
 			throw new CustomException(ErrorMessages.INVALID_ORDER_NULL);
 		}
-
+		validateMobileNumber(order.getPhoneNumber());
 		validateTotalAmount(order.getTotalAmount());
 		validateProductsList(order.getProductsList());
 		validateOrderedDate(order.getOrderedDate());
@@ -82,4 +82,18 @@ public class OrderValidator {
 		return true;
 
 	}
+	public static boolean validateMobileNumber(String mobileNumber) throws CustomException {
+	    // Check if the mobile number is null or empty
+	    if (mobileNumber == null || mobileNumber.isEmpty()) {
+	        throw new CustomException("INVALID_MOBILE_NUMBER_EMPTY");
+	    }
+
+	    // Check if the mobile number matches a valid pattern (e.g., 10 digits)
+	    if (!mobileNumber.matches("\\d{10}")) {
+	        throw new CustomException("INVALID_MOBILE_NUMBER_FORMAT");
+	    }
+
+	    return true;
+	}
+
 }

@@ -7,7 +7,7 @@ import com.fssa.veeblooms.exception.CustomException;
 import com.fssa.veeblooms.exception.DAOException;
 import com.fssa.veeblooms.model.User;
 import com.fssa.veeblooms.validator.UserValidator;
-
+ 
 public class UserService {
 
 	public boolean addUser(User user) throws DAOException, CustomException {

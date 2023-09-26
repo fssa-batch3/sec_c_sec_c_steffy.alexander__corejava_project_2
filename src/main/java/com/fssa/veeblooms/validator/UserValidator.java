@@ -15,7 +15,7 @@ public class UserValidator {
         validateLastName(user.getLastName());
         validateEmail(user.getEmail());
         validatePassword(user.getPassword());
-        
+         
         return true; 
  	}
 	//validateUserDetails
@@ -26,12 +26,14 @@ public class UserValidator {
         validateFirstName(user.getFirstName());
         validateLastName(user.getLastName());
         validateEmail(user.getEmail());
+        validateMobileNumber(user.getMobileNumber());
+        validateAddress(user.getAddress());
        
         
         return true; 
  	}
 	public static boolean validateFirstName(String firstName) throws CustomException {
-		if (firstName == null || firstName.isEmpty() || !firstName.matches("^[A-Za-z]+$")) {
+		if (firstName == null || firstName.isEmpty() || !firstName.matches( "^[a-zA-Z]{3,20}+$")) {
 			throw new CustomException(ErrorMessages.INVALID_FIRST_NAME);
 		}
 		return true;
@@ -39,7 +41,7 @@ public class UserValidator {
 	}
 
 	private static boolean validateLastName(String lastName) throws CustomException {
-		if (lastName == null || lastName.isEmpty() || !lastName.matches("^[A-Za-z]+$")) {
+		if (lastName == null || lastName.isEmpty() || !lastName.matches( "^[a-zA-Z]{3,20}+$")) {
 			throw new CustomException(ErrorMessages.INVALID_LAST_NAME); 
 		}
 		return true;
@@ -47,7 +49,7 @@ public class UserValidator {
 	}
 
 	private static boolean validateEmail(String email) throws CustomException {
-		if (email == null || email.isEmpty() || !email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+		if (email == null || email.isEmpty() || !email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z.-]+\\.[A-Za-z]{2,}$")) {
 			throw new CustomException(ErrorMessages.INVALID_EMAIL);
 		}
 		return true;
@@ -62,7 +64,7 @@ public class UserValidator {
 
 	}
 	public static boolean validateMobileNumber(String mobileNumber) throws CustomException {
-	    if (mobileNumber == null || mobileNumber.isEmpty() || !mobileNumber.matches("^(\\+\\d{1,3}[- ]?)?\\d{10}$")) {
+	    if (mobileNumber == null || mobileNumber.isEmpty() || !mobileNumber.matches("^(\\+91|91)?[6789]\\d{9}$")) {
 	        throw new CustomException(ErrorMessages.INVALID_MOBILE_NUMBER);
 	    }
 	    return true;
