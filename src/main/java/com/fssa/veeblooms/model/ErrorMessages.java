@@ -28,7 +28,7 @@ public interface ErrorMessages {
 	public static final String INVALID_LAST_NAME = "Invalid last name.";
 	public static final String INVALID_EMAIL = "Invalid email address.";
 	public static final String INVALID_PASSWORD = "Invalid password.";
-	public static final String INVALID_MOBILE_NUMBER = "Invalid mobile number.";
+	public static final String INVALID_MOBILE_NUMBER = "Invalid mobile number";
 	public static final String INVALID_ADDRESS = "Invalid address";
 	public static final String INVALID_GENDER = "Invalid gender";
 	public static final String INVALID_ORDER_NULL = "Order object can't be null";

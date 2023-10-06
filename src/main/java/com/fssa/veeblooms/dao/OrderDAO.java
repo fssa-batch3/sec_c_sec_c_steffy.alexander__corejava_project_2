@@ -161,6 +161,39 @@ public class OrderDAO {
 		}
 
 	}
+	
+	public static ArrayList<Order> getOrder() throws DAOException {
+		try (Connection connection = ConnectionUtil.getConnection()) {
+			String query = "SELECT * FROM `order` ";
+			try (PreparedStatement pst = connection.prepareStatement(query)) {
+			
+
+				try (ResultSet resultSet = pst.executeQuery()) {
+					ArrayList<Order> orders = new ArrayList<Order>();
+					while (resultSet.next()) {
+						Order order = new Order();
+						order.setOrderId(resultSet.getInt("order_id"));
+						order.setTotalAmount(resultSet.getDouble("total_amount"));
+						order.setOrderedDate(resultSet.getDate("ordered_date").toLocalDate());
+						order.setStatus(OrderStatus.valueOf(resultSet.getString("status")));
+						order.setComments(resultSet.getString("comments"));
+						order.setAddress(resultSet.getString("address"));
+						order.setPhoneNumber(resultSet.getString("phone_num"));
+						order.setProductsList(getOrderedProductsByOrderId(resultSet.getInt("order_id")));
+						orders.add(order);
+
+					}
+					return orders;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(ErrorMessages.ORDER_RETRIEVAL_FAILED);
+		}
+
+	}
+
+
 
 	public static boolean cancelOrder(int orderId) throws DAOException {
 		String updateQuery = "UPDATE `order` SET status = 'CANCELLED' WHERE order_id = ?";

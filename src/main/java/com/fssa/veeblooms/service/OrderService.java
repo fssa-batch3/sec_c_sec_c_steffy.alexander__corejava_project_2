@@ -39,4 +39,9 @@ public class OrderService {
 	return OrderDAO.cancelOrder(orderId);
 
 	}
+	public static ArrayList<Order> getOrder() throws DAOException, CustomException, SQLException {
+		
+		return OrderDAO.getOrder();
+
+		}
 }
