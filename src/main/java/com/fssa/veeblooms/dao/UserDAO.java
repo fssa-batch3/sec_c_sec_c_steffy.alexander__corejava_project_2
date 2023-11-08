@@ -93,9 +93,41 @@ public class UserDAO {
 		return null;
 	}
 
+	public static User getUserById(int  id) throws SQLException, DAOException {
+		User user = null;
+		String query = "SELECT * FROM users WHERE user_id = ?";
+
+		try (Connection con = ConnectionUtil.getConnection()) {
+			try (PreparedStatement pst = con.prepareStatement(query)) {
+				pst.setInt(1, id);
+
+				try (ResultSet rs = pst.executeQuery()) {
+					if (rs.next()) {
+						user = new User();
+						user.setFirstName(rs.getString("first_name"));
+						user.setLastName(rs.getString("last_name"));
+						user.setEmail(rs.getString("email"));
+						user.setPassword(rs.getString("password"));
+						user.setMobileNumber(rs.getString("mobile_num"));
+						user.setAddress(rs.getString("address"));
+						user.setGender(GenderEnum.valueOf(rs.getString("gender").toUpperCase()));
+
+					}
+				} 
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+
+			throw new DAOException("error getting email");
+		}
+		return user;
+		
+	}
+
 	public User getUserByEmail(String email) throws SQLException, DAOException {
 		User user = null;
-		String query = "SELECT * FROM USER WHERE email = ?";
+		String query = "SELECT * FROM USERS WHERE email = ?";
 
 		try (Connection con = ConnectionUtil.getConnection()) {
 			try (PreparedStatement pst = con.prepareStatement(query)) {

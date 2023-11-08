@@ -28,7 +28,7 @@ public class OrderDAO {
 			try (PreparedStatement pst = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
 
 				pst.setString(1, order.getOrderedDate() + "");
-				pst.setInt(2, order.getUserID());
+				pst.setInt(2, order.getUserID());//order.getUser().getUserIad
 				pst.setDouble(3, order.getTotalAmount());
 				pst.setString(4, order.getStatus().toString());
 				pst.setString(5, order.getAddress());
@@ -121,6 +121,7 @@ public class OrderDAO {
 						order.setComments(resultSet.getString("comments"));
 						order.setAddress(resultSet.getString("address"));
 						order.setPhoneNumber(resultSet.getString("phone_num"));
+						order.setModifiedDate(resultSet.getDate("modified_date").toLocalDate());
 						order.setProductsList(getOrderedProductsByOrderId(resultSet.getInt("order_id")));
 						orders.add(order);
 
@@ -135,7 +136,7 @@ public class OrderDAO {
 
 	}
 
-	public ArrayList<OrderedProduct> getOrderedProductsByOrderId(int orderId) throws DAOException {
+	public static ArrayList<OrderedProduct> getOrderedProductsByOrderId(int orderId) throws DAOException {
 		try (Connection connection = ConnectionUtil.getConnection()) {
 			String query = "SELECT * FROM order_items WHERE order_id = ?";
 			try (PreparedStatement pst = connection.prepareStatement(query)) {
@@ -160,6 +161,7 @@ public class OrderDAO {
 			throw new DAOException(ErrorMessages.ORDER_RETRIEVAL_FAILED);
 		}
 
+		
 	}
 	
 	public static ArrayList<Order> getOrder() throws DAOException {
@@ -179,7 +181,9 @@ public class OrderDAO {
 						order.setComments(resultSet.getString("comments"));
 						order.setAddress(resultSet.getString("address"));
 						order.setPhoneNumber(resultSet.getString("phone_num"));
+						order.setUserID(resultSet.getInt("user_id"));//set user object
 						order.setProductsList(getOrderedProductsByOrderId(resultSet.getInt("order_id")));
+						order.setModifiedDate(resultSet.getDate("modified_date").toLocalDate());
 						orders.add(order);
 
 					}
@@ -215,6 +219,46 @@ public class OrderDAO {
 		}
 	}
 
+	
+	//
+	public static boolean itemShipped(int orderId) throws DAOException {
+		String updateQuery = "UPDATE `order` SET status = 'SHIPPED' WHERE order_id = ?";
+
+		try (Connection connection = ConnectionUtil.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+
+			preparedStatement.setInt(1, orderId);
+			int rowsAffected = preparedStatement.executeUpdate();
+			System.out.println("order id : " + orderId + " is shipped successfully");
+
+			return rowsAffected > 0; // Return true if the order was canceled successfully
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+
+			return false;
+		}
+	}
+	public static boolean DeliveredOrder(int orderId) throws DAOException {
+		String updateQuery = "UPDATE `order` SET status ='DELIVERED'  WHERE order_id = ?";
+
+		try (Connection connection = ConnectionUtil.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+
+			preparedStatement.setInt(1, orderId);
+			int rowsAffected = preparedStatement.executeUpdate();
+			System.out.println("order id : " + orderId + " is Delivered successfully");
+
+			return rowsAffected > 0; // Return true if the order was canceled successfully
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+
+			return false;
+		}
+	}
 	public static void deleteOrderedProductsByOrderId(int orderId) throws DAOException {
 		if (orderId <= 0) {
 			throw new DAOException("Order ID cannot be zero or negative");

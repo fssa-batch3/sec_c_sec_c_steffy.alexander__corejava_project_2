@@ -12,17 +12,32 @@ public class ConnectionUtil {
 	public static Connection getConnection() throws DAOException {
 
 		Connection con = null;
-//		String url = System.getenv("DATABASE_HOST");
-//		String userName = System.getenv("DATABASE_USERNAME");
-//		String passWord = System.getenv("DATABASE_PASSWORD");
 
-		    String url = "jdbc:mysql://localhost:3306/veeblooms";
-	        String userName = "root";
-	        String passWord = "123456";
+		String url;
+		String userName;
+		String passWord;
+
+//		    String url = "jdbc:mysql://localhost:3306/veeblooms";
+//	        String userName = "root";
+//	        String passWord = "123456";
+
+		// Check if the "CI" environment variable is set
+		String environment = System.getenv("CI");
+
+		if (environment != null && environment.equalsIgnoreCase("true")) {
+			// Use cloud database credentials
+			url = System.getenv("DATABASE_HOST");
+			userName = System.getenv("DATABASE_USERNAME");
+			passWord = System.getenv("DATABASE_PASSWORD");
+		} else {
+			// Use local database credentials
+			url = System.getenv("LOCAL_DATABASE_HOST");
+			userName = System.getenv("LOCAL_DATABASE_USERNAME");
+			passWord = System.getenv("LOCAL_DATABASE_PASSWORD");
+		}
 
 		try {
-			
-			
+
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection(url, userName, passWord);
 			System.out.println("connection");
@@ -33,21 +48,6 @@ public class ConnectionUtil {
 		}
 		return con;
 
-//		
-//		   Connection con = null;
-
-//	        try {
-//	            Class.forName("com.mysql.cj.jdbc.Driver");
-//	            con = DriverManager.getConnection(url, userName, passWord);
-//	        } catch (Exception e) {
-//	            e.printStackTrace();
-//	            throw new RuntimeException("Unable to connect to the database");
-//	        }
-//	        return con;
-
-//		
-//		
 	}
-
 
 }

@@ -82,18 +82,14 @@ public class OrderValidator {
 		return true;
 
 	}
-	public static boolean validateMobileNumber(String mobileNumber) throws CustomException {
-	    // Check if the mobile number is null or empty
-	    if (mobileNumber == null || mobileNumber.isEmpty()) {
-	        throw new CustomException("INVALID_MOBILE_NUMBER_EMPTY");
-	    }
+	 public static boolean validateMobileNumber(String mobileNumber) throws CustomException {
+	        // Check if the mobile number is null or empty
+	        if (mobileNumber == null || mobileNumber.isEmpty()) {
+	            throw new CustomException(ErrorMessages.INVALID_MOBILE_NUMBER);
+	        }
 
-	    // Check if the mobile number matches a valid pattern (e.g., 10 digits)
-	    if (!mobileNumber.matches("\\d{10}")) {
-	        throw new CustomException("INVALID_MOBILE_NUMBER_FORMAT");
+	        return true;
 	    }
-
-	    return true;
 	}
 
-}
+

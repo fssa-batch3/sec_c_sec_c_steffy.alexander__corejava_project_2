@@ -7,11 +7,13 @@ import com.fssa.veeblooms.enumclass.OrderStatus;
 
 public class Order {
 
-	private int userID;
+	private int userID;//change to User user
 	private int OrderId;
 	private double totalAmount;
 	List<OrderedProduct> productsList;
 	private LocalDate orderedDate;
+	private LocalDate modifiedDate;
+
 	private OrderStatus status;
 	private String comments;
 	private String address;
@@ -91,16 +93,19 @@ public class Order {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+	public LocalDate getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(LocalDate modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
 	@Override
 	public String toString() {
 		return "Order [userID=" + userID + ", OrderId=" + OrderId + ", totalAmount=" + totalAmount + ", productsList="
-				+ productsList + ", orderedDate=" + orderedDate + ", status=" + status + ", comments=" + comments
-				+ ", address=" + address + ", phoneNumber=" + phoneNumber + ", getUserID()=" + getUserID()
-				+ ", getOrderId()=" + getOrderId() + ", getTotalAmount()=" + getTotalAmount() + ", getProductsList()="
-				+ getProductsList() + ", getOrderedDate()=" + getOrderedDate() + ", getStatus()=" + getStatus()
-				+ ", getComments()=" + getComments() + ", getAddress()=" + getAddress() + ", getPhoneNumber()="
-				+ getPhoneNumber() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
-				+ super.toString() + "]";
+				+ productsList + ", orderedDate=" + orderedDate + ", modifiedDate=" + modifiedDate + ", status="
+				+ status + ", comments=" + comments + ", address=" + address + ", phoneNumber=" + phoneNumber + "]";
 	}
 
 	

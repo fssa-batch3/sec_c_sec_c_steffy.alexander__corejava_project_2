@@ -37,6 +37,17 @@ public class OrderService {
 	public static boolean cancelOrder(int orderId) throws DAOException, CustomException, SQLException {
 		
 	return OrderDAO.cancelOrder(orderId);
+	}
+
+	public static boolean itemShipped(int shippedBtn) throws DAOException, CustomException, SQLException {
+		
+	return OrderDAO.itemShipped(shippedBtn);
+
+	}
+
+	public static boolean DeliveredOrder(int delivered) throws DAOException, CustomException, SQLException {
+		
+	return OrderDAO.DeliveredOrder(delivered);
 
 	}
 	public static ArrayList<Order> getOrder() throws DAOException, CustomException, SQLException {

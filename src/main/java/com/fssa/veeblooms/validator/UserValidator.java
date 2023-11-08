@@ -64,7 +64,7 @@ public class UserValidator {
 
 	}
 	public static boolean validateMobileNumber(String mobileNumber) throws CustomException {
-	    if (mobileNumber == null || mobileNumber.isEmpty() || !mobileNumber.matches("^(\\+91|91)?[6789]\\d{9}$")) {
+	    if (mobileNumber == null || mobileNumber.isEmpty() ) {
 	        throw new CustomException(ErrorMessages.INVALID_MOBILE_NUMBER);
 	    }
 	    return true;

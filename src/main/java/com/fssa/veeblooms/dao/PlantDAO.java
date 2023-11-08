@@ -40,7 +40,7 @@ public class PlantDAO {
 
 		try (Connection connection = ConnectionUtil.getConnection()) {
 			 // SQL query to insert the plant information into the 'plant' table
-			String insertQuery = "INSERT INTO plant (plantName, price,  plantType, plantHeight, plantingSeason, hybrid) VALUES (?, ?, ?, ?, ?, ?)";
+			String insertQuery = "INSERT INTO plant (plantName, price,  plantType, plantHeight, plantingSeason, hybrid, is_available) VALUES (?, ?, ?, ?, ?, ?,?)";
  
 			// Execute insert statement
 
@@ -52,7 +52,7 @@ public class PlantDAO {
 				pst.setFloat(4, plant.getPlantHeight());
 				pst.setString(5, plant.getPlantingSeason());
 				pst.setString(6, plant.getHybrid().toString());
-
+				pst.setInt(7, 1);
 				  // Execute the insert statement and get the number of affected rows
 				
 				int rowaffected = pst.executeUpdate();
@@ -235,7 +235,7 @@ public class PlantDAO {
 		try (Connection connection = ConnectionUtil.getConnection()) {
 			// Create update statement using task id
 			 // SQL query to update the plant information based on the plant ID
-			String updatequery = "UPDATE plant SET plantName = ?, price = ?, plantType = ?, plantHeight = ?, plantingSeason = ?, hybrid = ? WHERE plant_id = ?";
+			String updatequery = "UPDATE plant SET plantName = ?, price = ?, plantType = ?, plantHeight = ?, plantingSeason = ?, hybrid = ?,is_available=? WHERE plant_id = ?";
 
 			try (PreparedStatement pst = connection.prepareStatement(updatequery)) {
 				pst.setString(1, plant.getPlantName());
@@ -245,7 +245,12 @@ public class PlantDAO {
 				pst.setFloat(4, plant.getPlantHeight());
 				pst.setString(5, plant.getPlantingSeason());
 				pst.setString(6, plant.getHybrid().toString());
-				pst.setInt(7, getPlantIdByName(plant.getPlantName()));
+				System.out.println("uytfrde"+getPlantIdByName(plant.getPlantName()));
+				pst.setInt(7, 1);
+				pst.setInt(8, getPlantIdByName(plant.getPlantName()));
+				
+				
+				System.out.println(pst);
 				pst.executeUpdate();
 			}
 		} catch (SQLException e) {
@@ -281,11 +286,11 @@ public class PlantDAO {
 	            cStatement.setInt(1, plantIds);
 
 	            // Execute the callable statement to delete the plant
-	            cStatement.execute();
+	            cStatement.execute(); 
 	            Logger.info("deleted");
 	            return true;
 	        }
-	    } catch (SQLException e) {
+	    } catch (SQLException e) { 
 	        throw new DAOException("Error deleting plant", e);
 	    }
 	}
@@ -375,11 +380,11 @@ public class PlantDAO {
 	 */
 	public static List<Plant> getAllPlant() throws DAOException, SQLException {
 	    // Create a List to store the retrieved plant objects
-	    List<Plant> plantProductList = new ArrayList<>();
+	    List<Plant> plantProductList = new ArrayList<>(); 
 
 	    try (Connection connection = ConnectionUtil.getConnection()) {
 	        // SQL query to retrieve all plant records from the 'plant' table
-	        final String query = "SELECT * FROM plant";
+	        final String query = "SELECT * FROM plant where is_available=1";
 
 	        try (Statement st = connection.createStatement()) {
 
