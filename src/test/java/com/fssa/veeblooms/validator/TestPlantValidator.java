@@ -29,7 +29,7 @@ public class TestPlantValidator {
 		}
 	}
 
-	@Test
+	@Test 
 	public void testValidatePlant_ValidPlant() throws CustomException {
 		List<String> images = new ArrayList<String>();
 		images.add("https://www.youtube.com/watch?v=55tCJ8Odjvw");

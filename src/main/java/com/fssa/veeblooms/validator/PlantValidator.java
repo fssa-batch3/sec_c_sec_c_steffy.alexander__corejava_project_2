@@ -27,7 +27,7 @@ public class PlantValidator {
         validatePlantType(plant.getPlantType());
         validatePlantHeight(plant.getPlantHeight());
         validatePlantingSeason(plant.getPlantingSeason());
-        validateHybrid(plant.getHybrid());
+        validateHybrid(plant.getHybrid()); 
         return true; 
     } 
 

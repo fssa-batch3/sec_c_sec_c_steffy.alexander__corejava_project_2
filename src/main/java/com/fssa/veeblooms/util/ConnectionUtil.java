@@ -23,18 +23,22 @@ public class ConnectionUtil {
 
 		// Check if the "CI" environment variable is set
 		String environment = System.getenv("CI");
-
-		if (environment != null && environment.equalsIgnoreCase("true")) {
-			// Use cloud database credentials
-			url = System.getenv("DATABASE_HOST");
-			userName = System.getenv("DATABASE_USERNAME");
-			passWord = System.getenv("DATABASE_PASSWORD");
-		} else {
-			// Use local database credentials
-			url = System.getenv("LOCAL_DATABASE_HOST");
-			userName = System.getenv("LOCAL_DATABASE_USERNAME");
-			passWord = System.getenv("LOCAL_DATABASE_PASSWORD");
-		}
+//
+//		if (environment != null && environment.equalsIgnoreCase("true")) {
+//			// Use cloud database credentials
+//			url = System.getenv("DATABASE_HOST");
+//			userName = System.getenv("DATABASE_USERNAME");
+//			passWord = System.getenv("DATABASE_PASSWORD");
+//		} else {
+//			// Use local database credentials
+//			url = System.getenv("LOCAL_DATABASE_HOST");
+//			userName = System.getenv("LOCAL_DATABASE_USERNAME");
+//			passWord = System.getenv("LOCAL_DATABASE_PASSWORD");
+//		}
+		
+		url = System.getenv("DATABASE_HOST");
+		userName = System.getenv("DATABASE_USERNAME");
+		passWord = System.getenv("DATABASE_PASSWORD");
 
 		try {
 

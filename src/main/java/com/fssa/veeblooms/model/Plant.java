@@ -1,9 +1,12 @@
 package com.fssa.veeblooms.model;
 
+import java.sql.SQLException;
 import java.util.List;
 
+import com.fssa.veeblooms.dao.CartDao;
 import com.fssa.veeblooms.enumclass.HybridEnum;
 import com.fssa.veeblooms.enumclass.PlantTypeEnum;
+import com.fssa.veeblooms.exception.DAOException;
 
 
 public class Plant {
@@ -108,6 +111,14 @@ public class Plant {
 
 	}
 
+//	public static void main(String[] args) {
+//		try {
+//			CartDao.getExistingtQuantityByCartId(89);
+//		} catch (DAOException | SQLException e) {
+//			
+//			e.printStackTrace();
+//		}
+//	}
 	
 
 }

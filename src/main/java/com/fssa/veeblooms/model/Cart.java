@@ -10,9 +10,19 @@ public class Cart {
 	private int userId;
 	private double totalAmount;
 	private int quantity;
+	private int plantId;
 	private ArrayList<CartDetails> cartDetails;
+	public int getPlantId() {
+		return plantId;
+	}
 
-	public int getCartId() {
+	public void setPlantId(int plantId) {
+		this.plantId = plantId;
+	}
+
+	
+
+	public int getCartId(int cartId) {
 		return cartId;
 	}
 
@@ -48,14 +58,11 @@ public class Cart {
 		return cartDetails;
 	}
 
-	public void setCartDetails(ArrayList<CartDetails> cartDetails) {
-		this.cartDetails = cartDetails;
-	}
 
 	@Override
 	public String toString() {
 		return "Cart [cartId=" + cartId + ", userId=" + userId + ", totalAmount=" + totalAmount + ", quantity="
-				+ quantity + ", cartDetails=" + cartDetails + "]";
+				+ quantity + ", plantId=" + plantId + ", cartDetails=" + cartDetails + "]";
 	}
 
 
