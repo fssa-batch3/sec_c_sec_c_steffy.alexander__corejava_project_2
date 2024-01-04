@@ -43,7 +43,7 @@ public class PlantValidator {
             throw new CustomException(ErrorMessages.INVALID_PLANT_NAME_LENGTH);
         }
         // Use regex pattern to validate plant name format
-        String regexPattern = "[a-zA-Z]+";
+        String regexPattern = "^[a-zA-Z ]+$";
         Pattern pattern = Pattern.compile(regexPattern);
         Matcher matcher = pattern.matcher(plantName);
         boolean isMatch = matcher.matches();
