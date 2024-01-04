@@ -43,7 +43,10 @@ public class CartService {
 	
 
 	public static void decreaseQuantity(int cartId) throws DAOException, SQLException {
-
+		CartDao.decreaseQuantity(cartId);
+	}
+	public static void  removeCartByCartId(int cartId)  throws DAOException, SQLException {
+		CartDao.removeCartByCartId(cartId);
 	}
 	
 }

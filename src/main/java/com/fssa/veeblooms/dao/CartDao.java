@@ -116,7 +116,7 @@ public class CartDao {
 	}
 
 	public static int getExistingtQuantityByCartId(int cartId) throws DAOException, SQLException {
-		Cart cart = null;
+	
 		int quantity = 0;
 		String query = "Select quantity from cart where cart_id = ? ";
 
@@ -138,53 +138,143 @@ public class CartDao {
 		}
 
 	}
-
-	public static void increaseQuantity(int cartId) throws DAOException, SQLException {
+	
+	public static Cart getCartDetailsByCartId(int cartId) throws DAOException, SQLException {
 		Cart cart = null;
-		// SQL query to delete the user from the 'user' table
-		String query = "UPDATE cart SET quantity = ? WHERE cart_id = ?";
+		int quantity = 0;
+		String query = "Select * from cart where cart_id = ? ";
 
 		try (Connection connection = ConnectionUtil.getConnection()) {
 			try (PreparedStatement psmt = connection.prepareStatement(query)) {
-				psmt.setInt(1, cartId);
-				int rowsUpdated = psmt.executeUpdate();
 
-	            if (rowsUpdated > 0) {
-	                
-	                System.out.println("Quantity updated successfully");
-	            } else {
-	              
-	                System.out.println("Cart not found with ID: " + cartId);
-	            }
+				psmt.setInt(1, cartId);
+
+				try (ResultSet rs = psmt.executeQuery()) {
+					if (rs.next()) {
+						cart= new Cart();
+						cart.setCartId(cartId);
+						cart.setQuantity(rs.getInt("quantity"));
+						cart.setTotalAmount(rs.getDouble("total_amount"));
+						cart.setUserId(rs.getInt("user_id"));		
+					}
 				}
-			
+			}
+			return cart;
+
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		}
+
 	}
 
-	public static void decreaseQuantity(int cartId) throws DAOException, SQLException {
+	public static int increaseQuantity(int cartId) throws DAOException, SQLException {
 		Cart cart = null;
-        // SQL query to delete the user from the 'user' table
-		String query = "UPDATE cart SET quantity = ? WHERE cart_id = ?";
+		// SQL query to delete the user from the 'user' table
+		String query = "UPDATE cart SET quantity = ?, total_amount=? WHERE cart_id = ?";
 
 		try (Connection connection = ConnectionUtil.getConnection()) {
 			try (PreparedStatement psmt = connection.prepareStatement(query)) {
-				psmt.setInt(1, cartId);
-			
-			int rowsUpdated = psmt.executeUpdate();
+				cart= getCartDetailsByCartId(cartId);
+				psmt.setInt(1, cart.getQuantity() + 1);
+				double individualPlantPrice = cart.getTotalAmount()/cart.getQuantity();
+				psmt.setDouble(2, individualPlantPrice+cart.getTotalAmount());
+				psmt.setInt(3, cartId);
+				int rowsUpdated = psmt.executeUpdate();
 
-            if (rowsUpdated > 0) {
-                
-                System.out.println("Quantity updated successfully");
-            } else {
-              
-                System.out.println("Cart not found with ID: " + cartId);
-            }
+				if (rowsUpdated > 0) {
+
+					System.out.println("Quantity updated successfully");
+				} else {
+
+					System.out.println("Cart not found with ID: " + cartId);
+				}
+			}
+
+		} catch (SQLException e) {
+			throw new DAOException(e.getMessage());
+		}
+		return cartId;
+	}
+
+	public static int decreaseQuantity(int cartId) throws DAOException, SQLException {
+		Cart cart = null;
+		// SQL query to delete the user from the 'user' table
+		String query = "UPDATE cart SET quantity = ?, total_amount=? WHERE cart_id = ?";
+
+		try (Connection connection = ConnectionUtil.getConnection()) {
+			try (PreparedStatement psmt = connection.prepareStatement(query)) {
+				cart= getCartDetailsByCartId(cartId);
+				psmt.setInt(1, cart.getQuantity() - 1);
+				double individualPlantPrice = cart.getTotalAmount()/cart.getQuantity();
+				psmt.setDouble(2, cart.getTotalAmount()-individualPlantPrice);
+				psmt.setInt(3, cartId);
+				
+				int rowsUpdated = psmt.executeUpdate();
+
+				if (rowsUpdated > 0) {
+
+					System.out.println("Quantity updated successfully");
+				} else {
+
+					System.out.println("Cart not found with ID: " + cartId);
+				}
 			}
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		}
+		return cartId;
 	}
+	
+	public static int getCartIdByPlantId(int plantId, int userId) throws DAOException, SQLException {
+		
+		String query = "select cart_id from cart where plant_id = ? AND  user_id=?";
+		int cartId= -1;
+		try (Connection connection = ConnectionUtil.getConnection()) {
+			try (PreparedStatement psmt = connection.prepareStatement(query)) {
+
+				psmt.setInt(1,plantId);
+				psmt.setInt(2, userId);
+
+				ResultSet rs = psmt.executeQuery();
+
+				if (rs.next()) {
+
+					return rs.getInt("cart_id");
+				} 
+			}
+		} catch (SQLException e) {
+			throw new DAOException(e.getMessage());
+		}
+		return cartId;
+	}
+	
+	
+	public static void removeCartByCartId(int cartId) throws DAOException, SQLException {
+		
+		String query = "Delete from cart where cart_id = ?";
+	
+		try (Connection connection = ConnectionUtil.getConnection()) {
+			try (PreparedStatement psmt = connection.prepareStatement(query)) {
+
+				psmt.setInt(1,cartId);
+				
+				int rowsUpdated = psmt.executeUpdate();
+
+				if (rowsUpdated > 0) {
+
+					System.out.println("cart deleted successfully");
+				} else {
+
+					System.out.println("Cart not found with ID: " + cartId);
+				}
+			}
+		} catch (SQLException e) {
+			throw new DAOException(e.getMessage());
+		}
+	
+	}
+	
+	
+	
 
 }

@@ -22,7 +22,7 @@ public class Cart {
 
 	
 
-	public int getCartId(int cartId) {
+	public int getCartId() {
 		return cartId;
 	}
 

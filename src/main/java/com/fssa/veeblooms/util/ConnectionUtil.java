@@ -36,9 +36,9 @@ public class ConnectionUtil {
 //			passWord = System.getenv("LOCAL_DATABASE_PASSWORD");
 //		}
 		
-		url = System.getenv("DATABASE_HOST");
-		userName = System.getenv("DATABASE_USERNAME");
-		passWord = System.getenv("DATABASE_PASSWORD");
+		url = System.getenv("LOCAL_DATABASE_HOST");
+		userName = System.getenv("LOCAL_DATABASE_USERNAME");
+		passWord = System.getenv("LOCAL_DATABASE_PASSWORD");
 
 		try {
 
