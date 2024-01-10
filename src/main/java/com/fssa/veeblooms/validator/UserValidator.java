@@ -64,11 +64,20 @@ public class UserValidator {
 
 	}
 	public static boolean validateMobileNumber(String mobileNumber) throws CustomException {
-	    if (mobileNumber == null || mobileNumber.isEmpty() ) {
+		if (mobileNumber == null || mobileNumber.length() != 10 || !mobileNumber.matches("^[1-9][0-9]*$")) {
 	        throw new CustomException(ErrorMessages.INVALID_MOBILE_NUMBER);
 	    }
+
+	    // Modify the regex pattern based on your requirements
+	    String regexPattern = "^[1-9][0-9]*$";
+
+	    if (!mobileNumber.matches(regexPattern)) {
+	        throw new CustomException(ErrorMessages.INVALID_MOBILE_NUMBER);
+	    }
+
 	    return true;
 	}
+
 
 	public static boolean validateAddress(String address) throws CustomException {
 	    if (address == null || address.isEmpty()) {

@@ -1,12 +1,12 @@
 package com.fssa.veeblooms.model;
 
 public class OrderedProduct {
-    private int productId;
+	
+    private int productId; 
     private double productPrice;
     private int quantity;
     private double totalAmount;
 
-   
 
     public double getProductPrice() {
         return productPrice;

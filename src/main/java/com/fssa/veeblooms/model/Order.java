@@ -10,14 +10,14 @@ public class Order {
 	private int userID;//change to User user
 	private int OrderId;
 	private double totalAmount;
-	List<OrderedProduct> productsList;
+	
 	private LocalDate orderedDate;
 	private LocalDate modifiedDate;
 
 	private OrderStatus status;
 	private String comments;
 	private String address;
-
+	List<OrderedProduct> productsList;
 
 	private String phoneNumber;
 

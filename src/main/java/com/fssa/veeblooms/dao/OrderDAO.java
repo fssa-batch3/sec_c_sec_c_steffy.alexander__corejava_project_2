@@ -70,7 +70,7 @@ public class OrderDAO {
 					pst.setInt(1, orderId);
 					pst.setInt(2, orderedProduct.getProductId());
 					pst.setDouble(3, orderedProduct.getProductPrice());
-					pst.setInt(4, 1);
+					pst.setInt(4, orderedProduct.getQuantity());
 					pst.setDouble(5, orderedProduct.getTotalAmount());
 					pst.setString(6, OrderStatus.ORDERED + "");
 

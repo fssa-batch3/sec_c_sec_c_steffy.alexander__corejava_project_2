@@ -74,7 +74,7 @@ public class CartDao {
 					// Execute the insert statement and get the number of affected rows
 					int rowsAffected = pst.executeUpdate();
 				}
-				Logger.info("Odered products addded to the ordered_products table successfully");
+				Logger.info("Ordered products addded to the ordered_products table successfully");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
