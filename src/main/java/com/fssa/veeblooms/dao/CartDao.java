@@ -274,7 +274,31 @@ public class CartDao {
 	
 	}
 	
+	public static void removeallCartByUserId(int userId) throws DAOException, SQLException {
+		String query = "Delete from cart where user_id = ?";
+		
+		try (Connection connection = ConnectionUtil.getConnection()) {
+			try (PreparedStatement psmt = connection.prepareStatement(query)) {
+
+				psmt.setInt(1,userId);
+				
+				int rowsUpdated = psmt.executeUpdate();
+
+				if (rowsUpdated > 0) {
+
+					System.out.println("cart deleted successfully");
+				} else {
+
+					System.out.println("Cart not found with ID: " + userId);
+				}
+			}
+		} catch (SQLException e) {
+			throw new DAOException(e.getMessage());
+		}
+	}
+	
+	}
+	
 	
 	
 
-}

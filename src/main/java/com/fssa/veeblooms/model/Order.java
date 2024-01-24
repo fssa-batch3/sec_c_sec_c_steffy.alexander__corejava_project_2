@@ -13,7 +13,8 @@ public class Order {
 	
 	private LocalDate orderedDate;
 	private LocalDate modifiedDate;
-
+	private String name;
+	
 	private OrderStatus status;
 	private String comments;
 	private String address;
@@ -34,6 +35,14 @@ public class Order {
 	public int getOrderId() {
 		return OrderId;
 	}
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 
 	public void setOrderId(int orderId) {
 		OrderId = orderId;

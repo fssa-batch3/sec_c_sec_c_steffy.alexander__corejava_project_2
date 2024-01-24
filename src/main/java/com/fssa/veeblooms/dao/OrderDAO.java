@@ -19,7 +19,7 @@ public class OrderDAO {
 
 		try (Connection connection = ConnectionUtil.getConnection()) {
 			// SQL query to insert the order information into the 'orders' table
-			String insertQuery = "INSERT INTO `order` (ordered_date, user_id, total_amount, status,address,phone_num) VALUES (?, ?, ?, ?,?,?)";
+			String insertQuery = "INSERT INTO `order` (ordered_date, user_id, total_amount, status,address,phone_num,name) VALUES (?,?, ?, ?, ?,?,?)";
 
 			// Execute insert statement
 			try (PreparedStatement pst = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
@@ -30,7 +30,7 @@ public class OrderDAO {
 				pst.setString(4, order.getStatus().toString());
 				pst.setString(5, order.getAddress());
 				pst.setString(6, order.getPhoneNumber());
-
+				pst.setString(7, order.getName());
 				int affectedRows = pst.executeUpdate();
 				int orderId;
 				if (affectedRows == 0) {
@@ -46,6 +46,7 @@ public class OrderDAO {
 					}
 				}
 				addOrderItems(order.getProductsList(), orderId);
+				CartDao.removeallCartByUserId(order.getUserID());
 				Logger.info("row/rows affected: " + affectedRows);
 
 			}
@@ -120,6 +121,7 @@ public class OrderDAO {
 						order.setPhoneNumber(resultSet.getString("phone_num"));
 						order.setModifiedDate(resultSet.getDate("modified_date").toLocalDate());
 						order.setProductsList(getOrderedProductsByOrderId(resultSet.getInt("order_id")));
+						order.setName(resultSet.getString("name"));
 						orders.add(order);
 
 					}
